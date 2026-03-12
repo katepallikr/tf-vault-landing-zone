@@ -1,0 +1,29 @@
+# KV v2 read-write policy for ${app_name}
+# Grants full CRUD access for the apply phase.
+
+path "secret/data/${app_name}/*" {
+  capabilities = ["create", "update", "read", "delete"]
+}
+
+path "secret/metadata/${app_name}/*" {
+  capabilities = ["read", "list", "delete"]
+}
+
+path "secret/delete/${app_name}/*" {
+  capabilities = ["update"]
+}
+
+path "secret/undelete/${app_name}/*" {
+  capabilities = ["update"]
+}
+
+path "secret/destroy/${app_name}/*" {
+  capabilities = ["update"]
+}
+
+%{ for key, sp in secret_paths ~}
+# Custom path: ${key}
+path "${sp.path}" {
+  capabilities = ${jsonencode(sp.capabilities)}
+}
+%{ endfor ~}

@@ -1,0 +1,15 @@
+# Default reviewers for everything
+* @platform-team
+
+# Security-sensitive files require security team review
+/policies/     @security-team @platform-team
+/modules/vault-auth/  @security-team @platform-team
+/modules/vault-namespace/ @security-team @platform-team
+
+# CI/CD and tooling
+/.github/      @devops-team @platform-team
+
+# Documentation
+/docs/         @platform-team
+/README.md     @platform-team
+/examples/     @platform-team

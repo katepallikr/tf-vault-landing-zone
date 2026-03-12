@@ -1,0 +1,28 @@
+# Sentinel Policy: enforce-mandatory-tags.sentinel
+#
+# Ensures that all workspaces have the 'managed-by-landing-zone' tag.
+
+import "tfplan/v2" as tfplan
+
+# Get all tfe_workspace resources
+all_workspaces = filter tfplan.resource_changes as _, rc {
+	rc.type is "tfe_workspace" and
+		(rc.mode is "managed") and
+		(rc.change.actions contains "create" or rc.change.actions contains "update")
+}
+
+# Mandatory tag
+mandatory_tag = "managed-by-landing-zone"
+
+# Rule: Workspaces must include the mandatory tag
+tag_enforcement_rule = rule {
+	all all_workspaces as _, w {
+		any w.change.after.tag_names as t {
+			t is mandatory_tag
+		}
+	}
+}
+
+main = rule {
+	tag_enforcement_rule
+}

@@ -1,0 +1,21 @@
+# KV v2 read-only policy for ${app_name}
+# Grants read and list access to application secret paths.
+
+path "secret/data/${app_name}/*" {
+  capabilities = ["read"]
+}
+
+path "secret/metadata/${app_name}/*" {
+  capabilities = ["read", "list"]
+}
+
+path "secret/metadata/" {
+  capabilities = ["list"]
+}
+
+%{ for key, sp in secret_paths ~}
+# Custom path: ${key}
+path "${sp.path}" {
+  capabilities = ${jsonencode(["read"])}
+}
+%{ endfor ~}
