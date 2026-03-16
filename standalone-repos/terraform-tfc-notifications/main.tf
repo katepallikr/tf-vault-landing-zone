@@ -9,24 +9,24 @@ terraform {
 }
 
 variable "workspace_ids" {
-  description = "Map of workspace keys to their IDs."
+  description = "Workspace ID map."
   type        = map(string)
 }
 
 variable "slack_webhook_url" {
-  description = "The Slack webhook URL for workspace notifications."
+  description = "Slack webhook URL."
   type        = string
   sensitive   = true
 }
 
 variable "notification_name" {
-  description = "Name for the notification configuration."
+  description = "Notification config name."
   type        = string
   default     = "slack-alerts"
 }
 
 variable "notification_triggers" {
-  description = "List of triggers for the notification."
+  description = "Triggers list."
   type        = list(string)
   default     = ["run:errored", "run:needs_attention"]
 }

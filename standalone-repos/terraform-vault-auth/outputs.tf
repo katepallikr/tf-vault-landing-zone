@@ -1,19 +1,19 @@
 output "jwt_auth_path" {
-  description = "Path where the JWT auth backend is mounted."
+  description = "JWT backend mount path."
   value       = local.jwt_backend_path
 }
 
 output "role_names" {
-  description = "Map of environment names to their primary Vault role names."
+  description = "env => role name map."
   value       = { for env, cfg in var.vault_role_map : env => cfg.role_name }
 }
 
 output "base_policy_name" {
-  description = "Name of the base token self-management policy."
+  description = "Base self-manage policy name."
   value       = vault_policy.tfc_base.name
 }
 
 output "custom_policy_names" {
-  description = "Names of custom policies created by this module."
+  description = "Custom policy names."
   value       = [for name, _ in vault_policy.custom : name]
 }

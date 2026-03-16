@@ -8,7 +8,7 @@ output "project_id" {
 }
 
 output "project_name" {
-  description = "Name of the Terraform project."
+  description = "Terraform project name."
   value       = module.workspace.project_name
 }
 
@@ -20,14 +20,14 @@ output "workspace_ids" {
 }
 
 output "workspace_names" {
-  description = "Map of environment names to workspace names."
+  description = "environment => workspace name map."
   value       = module.workspace.workspace_names
 }
 
 # Vault
 
 output "vault_jwt_auth_path" {
-  description = "Mount path of the JWT auth backend in Vault."
+  description = "JWT auth mount path."
   value       = var.enable_vault_integration ? var.vault_jwt_auth_path : null
 }
 

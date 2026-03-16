@@ -1,4 +1,4 @@
-# Vault AWS Secrets Engine Submodule — Outputs
+
 
 output "backend_path" {
   description = "AWS engine mount path."

@@ -9,12 +9,12 @@ terraform {
 }
 
 variable "workspace_ids" {
-  description = "Map of workspace keys to their IDs."
+  description = "Workspace ID map."
   type        = map(string)
 }
 
 variable "run_task_id" {
-  description = "The ID of the TFE Run Task (e.g., Checkov, Infracost) to attach."
+  description = "Run Task ID to attach."
   type        = string
 }
 

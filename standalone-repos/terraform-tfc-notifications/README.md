@@ -1,3 +1,3 @@
-# Terraform TFC Notifications Module
+# terraform-tfc-notifications
 
-This standalone module wires up asynchronous Workspace notifications via Webhooks to collaborative platforms like Slack. It notifies teams when Run operations begin, fail, or succeed.
+Slack webhook notifications on workspace runs. Triggers on errors and needs_attention by default.

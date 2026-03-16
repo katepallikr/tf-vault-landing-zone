@@ -1,5 +1,4 @@
-# KV v2 read-only policy for ${app_name}
-# Grants read and list access to application secret paths.
+# Read-only KV v2 access for ${app_name}
 
 path "secret/data/${app_name}/*" {
   capabilities = ["read"]

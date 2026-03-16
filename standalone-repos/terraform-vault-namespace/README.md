@@ -1,5 +1,3 @@
-# Terraform Vault Namespace Module
+# terraform-vault-namespace
 
-A targeted standalone module designed to provision dedicated HCP Vault Namespaces and KV secrets engines for application onboarding. 
-
-**Architecture:** Use this Lego Block when you need to provision heavy isolation boundaries inside Vault Enterprise for distinct application domains.
+Creates a child namespace and optional KV v2 mount. Requires Vault Enterprise or HCP Vault.

@@ -1,8 +1,4 @@
-# Enterprise Landing Zone Example
-#
-# Demonstrates configuration for self-hosted Terraform Enterprise
-# with Vault Enterprise, including custom TFE hostname and
-# Vault namespace without the HCP "admin" prefix.
+# Self-hosted TFE + Vault Enterprise config (no HCP "admin" prefix).
 
 provider "tfe" {
   hostname = var.tfe_hostname

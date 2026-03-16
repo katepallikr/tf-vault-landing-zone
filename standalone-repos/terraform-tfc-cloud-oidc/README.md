@@ -1,5 +1,3 @@
-# Terraform TFC Cloud OIDC Module
+# terraform-tfc-cloud-oidc
 
-This standalone module is responsible for configuring Dynamic Provider Credentials bridging Terraform Enterprise into Cloud service providers like AWS, Azure, and GCP.
-
-It generates the required `TFC_WORKLOAD_IDENTITY_*` variables automatically for provisioned Workspaces.
+Injects `TFC_AWS_PROVIDER_AUTH` / `TFC_GCP_*` / `TFC_AZURE_*` env vars on workspaces for cloud OIDC.

@@ -1,33 +1,33 @@
 variable "namespace_path" {
-  description = "Path for the child namespace relative to the parent."
+  description = "Child namespace path."
   type        = string
 }
 
 variable "parent_namespace" {
-  description = "Parent Vault namespace. Empty string for the root namespace."
+  description = "Parent namespace (empty = root)."
   type        = string
   default     = ""
 }
 
 variable "enable_kv_engine" {
-  description = "Whether to mount a KV v2 secrets engine in the namespace."
+  description = "Mount KV v2 in the namespace."
   type        = bool
   default     = true
 }
 
 variable "kv_mount_path" {
-  description = "Mount path for the KV v2 secrets engine."
+  description = "KV v2 mount path."
   type        = string
   default     = "secret"
 }
 
 variable "application_name" {
-  description = "Application identifier for metadata."
+  description = "App name (for metadata)."
   type        = string
 }
 
 variable "tags" {
-  description = "Tags to apply as custom metadata on the namespace."
+  description = "Custom metadata tags."
   type        = map(string)
   default     = {}
 }

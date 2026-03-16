@@ -31,14 +31,14 @@ This Landing Zone acts as a core assembler. Instead of being a Monolith, the orc
 
 ## Features
 
-- **Decoupled Architecture** — Modules are natively segregated by focus (Workspace vs Vault vs Run-tasks)
+- **Modular** — Workspace, Vault, and Day 2 ops are separate modules with their own lifecycle
 - **Vault integration** — JWT-based workload identity federation with no static credentials stored in Terraform
 - **Day 2 ops** — Checkov/Infracost run tasks, Slack alerts, and variable set attachments
 - **Cloud OIDC** — AWS/GCP/Azure workload identity without needing Vault
 
 ## Module Ecosystem Structure
 
-This Orchestrator fetches configurations from external versioned repositories. Ensure the following Lego Block packages are available in your Registry or Git Server:
+The orchestrator pulls these child modules from your registry or Git:
 
 - `terraform-tfe-workspace`
 - `terraform-vault-auth`

@@ -1,3 +1,3 @@
-# Terraform TFC Variable Sets Module
+# terraform-tfc-variable-sets
 
-This standalone module automates the attachment of administrative, pre-defined Variable Sets directly to Workspaces or Projects during onboarding.
+Attaches variable sets to a project.

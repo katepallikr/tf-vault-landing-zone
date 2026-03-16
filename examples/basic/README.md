@@ -1,7 +1,6 @@
-# Basic Landing Zone Example
+# Basic Example
 
-This example demonstrates the minimum configuration needed to onboard
-an application to HCP Terraform with Vault integration.
+Minimum config: one project, two workspaces, Vault wired up.
 
 ## What Gets Created
 

@@ -70,12 +70,12 @@ automatically via workload identity.
               ┌─────────────────┼─────────────────┐
               ▼                 ▼                  ▼
   ┌───────────────────┐ ┌────────────────┐ ┌────────────────────┐
-  │ modules/workspace │ │ modules/       │ │ modules/           │
-  │                   │ │ vault-auth     │ │ vault-namespace    │
-  │ - tfe_project     │ │                │ │                    │
-  │ - tfe_workspace   │ │ - jwt_backend  │ │ - vault_namespace  │
-  │ - tfe_variable    │ │ - jwt_role     │ │ - vault_mount (kv) │
-  │ - tfe_team_access │ │ - vault_policy │ │                    │
+  │ tfe-workspace     │ │ vault-auth     │ │ vault-namespace    │
+  │                   │ │                │ │                    │
+  │ - tfe_project     │ │ - jwt_backend  │ │ - vault_namespace  │
+  │ - tfe_workspace   │ │ - jwt_role     │ │ - vault_mount (kv) │
+  │ - tfe_variable    │ │ - vault_policy │ │                    │
+  │ - tfe_team_access │ │                │ │                    │
   └───────────────────┘ └────────────────┘ └────────────────────┘
     Always created       count = enable_    count = enable_
                          vault_integration  vault_namespace
@@ -83,7 +83,7 @@ automatically via workload identity.
 
 Each submodule can be used independently. For example, if you already have a
 workspace provisioning pipeline and only need the Vault auth configuration,
-reference `modules/vault-auth` directly.
+reference `standalone-repos/terraform-vault-auth` directly.
 
 ## Feature Flag Resolution
 

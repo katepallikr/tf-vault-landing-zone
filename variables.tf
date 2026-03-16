@@ -1,8 +1,4 @@
-# Landing Zone Module — Input Variables
-#
-# Organized by concern: platform configuration, Terraform workspace settings,
-# Vault integration, and tagging. Every variable includes a description,
-# type constraint, and validation where applicable.
+# Input variables grouped by platform config, workspace settings, Vault, and Day 2 ops.
 
 # Platform Configuration
 

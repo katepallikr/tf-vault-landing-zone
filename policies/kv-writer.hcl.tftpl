@@ -1,5 +1,4 @@
-# KV v2 read-write policy for ${app_name}
-# Grants full CRUD access for the apply phase.
+# Read-write KV v2 access for ${app_name}
 
 path "secret/data/${app_name}/*" {
   capabilities = ["create", "update", "read", "delete"]

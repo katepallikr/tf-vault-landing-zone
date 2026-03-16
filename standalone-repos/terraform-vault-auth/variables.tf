@@ -1,49 +1,49 @@
 variable "organization_name" {
-  description = "Terraform organization name for bound claims."
+  description = "TFC/TFE org (used in bound claims)."
   type        = string
 }
 
 variable "project_name" {
-  description = "Terraform project name for bound claims."
+  description = "Project name for bound claims."
   type        = string
 }
 
 variable "application_name" {
-  description = "Application identifier."
+  description = "App identifier."
   type        = string
 }
 
 variable "tfc_hostname" {
-  description = "Hostname of the Terraform platform (OIDC issuer)."
+  description = "TFC/TFE hostname (OIDC issuer)."
   type        = string
 }
 
 variable "vault_namespace" {
-  description = "Vault namespace where the JWT backend and roles are created."
+  description = "Target Vault namespace."
   type        = string
   default     = ""
 }
 
 variable "jwt_auth_path" {
-  description = "Mount path for the JWT auth backend."
+  description = "JWT auth mount path."
   type        = string
   default     = "jwt"
 }
 
 variable "create_jwt_backend" {
-  description = "Whether to create the JWT auth backend. Set false if it already exists."
+  description = "Create the JWT backend, or false if it exists."
   type        = bool
   default     = true
 }
 
 variable "vault_audience" {
-  description = "Expected audience in workload identity tokens."
+  description = "Expected audience claim."
   type        = string
   default     = "vault.workload.identity"
 }
 
 variable "vault_role_map" {
-  description = "Map of environment to Vault role configuration."
+  description = "env => role config."
   type = map(object({
     role_name         = string
     plan_role_name    = string
@@ -54,35 +54,35 @@ variable "vault_role_map" {
 }
 
 variable "role_token_policies" {
-  description = "List of Vault policy names to attach to roles."
+  description = "Policy names to attach to roles."
   type        = list(string)
 }
 
 variable "token_ttl" {
-  description = "Default TTL in seconds for issued tokens."
+  description = "Token TTL (seconds)."
   type        = number
   default     = 1200
 }
 
 variable "token_max_ttl" {
-  description = "Maximum TTL in seconds for issued tokens."
+  description = "Token max TTL (seconds)."
   type        = number
   default     = 2400
 }
 
 variable "enable_plan_apply_separation" {
-  description = "Whether to create separate plan/apply roles."
+  description = "Separate plan/apply roles."
   type        = bool
   default     = false
 }
 
 variable "custom_policy_hcl" {
-  description = "Map of policy names to HCL content for custom policies."
+  description = "policy name => HCL map."
   type        = map(string)
   default     = {}
 }
 
 variable "base_policy_name" {
-  description = "Name for the base token self-management policy."
+  description = "Base self-manage policy name."
   type        = string
 }

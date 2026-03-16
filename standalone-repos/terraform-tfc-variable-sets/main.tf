@@ -9,12 +9,12 @@ terraform {
 }
 
 variable "project_id" {
-  description = "The ID of the TFE project to attach variable sets to."
+  description = "TFE project ID."
   type        = string
 }
 
 variable "variable_set_ids" {
-  description = "List of Variable Set IDs to attach to the project."
+  description = "Variable Set IDs."
   type        = list(string)
   default     = []
 }
