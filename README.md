@@ -71,9 +71,9 @@ module "app_landing_zone" {
 
 This module implements HashiCorp's recommended security patterns:
 
-1. **No static credentials** — Workspaces authenticate to Vault using short-lived JWT tokens verified against the Terraform platform's OIDC endpoint
-2. **Bound claims** — Each role restricts authentication to a specific organization, project, and workspace using the `sub` claim
-3. **Pre-condition Validation** — Critical inputs and lookups (like team names and organization accessibility) are strictly guarded using lifecycle preconditions internally.
+1. **No static credentials** — workspaces auth to Vault via short-lived JWTs verified against the TFC OIDC endpoint
+2. **Bound claims** — each role is locked to a specific org + project + workspace via the `sub` claim
+3. **Input validation** — lifecycle preconditions guard team lookups and org access
 
 ## Requirements
 

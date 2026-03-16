@@ -21,7 +21,7 @@ terraform {
 
 provider "vault" {
   # Vault Address and token will be automatically injected by Terraform Cloud
-  # via the TFC_VAULT_ADDR and TFC_VAULT_RUN_ROLE variables populated by the Golden Module.
+  # TFC_VAULT_ADDR and TFC_VAULT_RUN_ROLE are set by the landing zone module.
 }
 
 provider "aws" {

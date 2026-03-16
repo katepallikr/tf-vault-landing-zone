@@ -1,16 +1,16 @@
 variable "aws_region" {
-  description = "The AWS region to deploy resources into."
+  description = "AWS region."
   type        = string
   default     = "us-east-1"
 }
 
 variable "application_iam_role_arn" {
-  description = "The pre-existing AWS IAM Role ARN that the Vault Secret Engine will assume."
+  description = "IAM Role ARN for the Vault AWS secrets engine to assume."
   type        = string
 }
 
 variable "tfc_project_name" {
-  description = "The name of the Terraform Cloud project hosting this application."
+  description = "TFC project name."
   type        = string
   default     = "landing-zone-test"
 }

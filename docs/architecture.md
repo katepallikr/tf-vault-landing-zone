@@ -100,11 +100,7 @@ remain identical regardless of the target platform.
 
 ## Security Boundaries
 
-- **Workspace isolation**: Each workspace can only authenticate as itself.
-  Bound claims include the organization, project, and workspace name.
-- **Namespace isolation**: When enabled, each application operates in its
-  own Vault namespace with no visibility into sibling namespaces.
-- **Token lifecycle**: Tokens are short-lived (20 min default), renewable
-  by the Terraform runtime, and automatically revoked when the run completes.
-- **Policy composition**: The base policy grants only token self-management.
-  All secret access requires explicit additional policies.
+- **Workspace isolation** — bound claims lock each workspace to its own org/project/workspace identity
+- **Namespace isolation** — when enabled, apps get their own Vault namespace with no sibling visibility
+- **Token lifecycle** — 20 min default TTL, auto-revoked when the run finishes
+- **Policy composition** — base policy only covers token self-management; secret access needs explicit policies

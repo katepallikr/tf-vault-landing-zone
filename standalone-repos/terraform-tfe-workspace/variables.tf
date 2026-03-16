@@ -118,13 +118,13 @@ variable "enable_plan_apply_separation" {
 }
 
 variable "run_trigger_source_workspace_ids" {
-  description = "Source workspace IDs for run triggers."
+  description = "Run trigger source IDs."
   type        = list(string)
   default     = []
 }
 
 variable "sentinel_policy_set_ids" {
-  description = "Sentinel policy set IDs to attach to the project."
+  description = "Sentinel policy set IDs."
   type        = list(string)
   default     = []
 }

@@ -1,5 +1,5 @@
 variable "organization_name" {
-  description = "Terraform organization name."
+  description = "TFC/TFE org."
   type        = string
 }
 
@@ -27,19 +27,19 @@ variable "vault_namespace" {
 }
 
 variable "oauth_token_id" {
-  description = "OAuth token ID for VCS connectivity."
+  description = "OAuth token ID for VCS."
   type        = string
   default     = ""
 }
 
 variable "create_jwt_backend" {
-  description = "Whether to create the JWT auth backend."
+  description = "Create JWT backend."
   type        = bool
   default     = true
 }
 
 variable "enable_sentinel" {
-  description = "Whether to enable Sentinel policies."
+  description = "Enable Sentinel."
   type        = bool
   default     = false
 }

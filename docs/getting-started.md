@@ -91,8 +91,8 @@ authentication succeed in the run logs.
 
 ## Next Steps
 
-- Enable a **dedicated Vault namespace** with `enable_vault_namespace = true`
-- Add **custom policies** for application-specific secret paths
-- Enable **plan/apply separation** for production workspaces
-- Attach **Sentinel policy sets** for governance guardrails
-- See the [complete example](../examples/complete/) for a full-featured configuration
+- Set `enable_vault_namespace = true` for a dedicated app namespace
+- Add custom Vault policies for your secret paths
+- Use `enable_plan_apply_separation = true` in prod for least-privilege
+- Sentinel policy sets can be attached via `enable_sentinel_policies`
+- See the [complete example](../examples/complete/) for all options
