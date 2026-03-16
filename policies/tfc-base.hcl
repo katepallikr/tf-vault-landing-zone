@@ -1,8 +1,4 @@
-# Terraform Workspace Base Policy
-#
-# Every workspace that authenticates to Vault via workload identity
-# must have these capabilities. Without them, dynamic credential
-# sessions will fail to initialize or clean up properly.
+# Required token self-management capabilities for TFC workspaces.
 
 path "auth/token/lookup-self" {
   capabilities = ["read"]

@@ -1,0 +1,5 @@
+organization_name = "acme-corp"
+vault_url         = "https://vault.acme.corp:8200"
+vault_namespace   = "admin"
+tfe_hostname      = "app.terraform.io"
+platform_type     = "hcp"

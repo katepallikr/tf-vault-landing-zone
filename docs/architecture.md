@@ -1,8 +1,6 @@
 # Architecture
 
-This document describes the technical architecture of the landing zone module,
-the authentication flow between Terraform and Vault, and how the module's
-three submodules compose together.
+Architecture, auth flow, and component boundaries for the landing zone.
 
 ## High-Level Design
 

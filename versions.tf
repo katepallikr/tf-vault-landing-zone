@@ -1,10 +1,4 @@
-# Landing Zone Module — Provider and Terraform Version Constraints
-#
-# Supports both HCP Terraform (cloud) and Terraform Enterprise (self-hosted),
-# as well as HCP Vault Dedicated and Vault Enterprise.
-#
-# Provider configuration belongs in the root module calling this module,
-# not here. This file only declares version constraints.
+# Version constraints only — provider config belongs in the calling root.
 
 terraform {
   required_version = ">= 1.6.0"

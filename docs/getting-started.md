@@ -1,12 +1,8 @@
 # Getting Started
 
-This guide walks you through onboarding your first application using the
-landing zone module. By the end, you will have a Terraform project with
-environment workspaces that authenticate to Vault automatically.
+Example configuration for a TFC project with Vault JWT auth.
 
 ## Prerequisites
-
-Before you begin, make sure you have the following ready.
 
 **Terraform Platform:**
 - An HCP Terraform organization (or Terraform Enterprise instance)

@@ -4,12 +4,10 @@
 # Vault integration, and tagging. Every variable includes a description,
 # type constraint, and validation where applicable.
 
-# ─────────────────────────────────────────────
 # Platform Configuration
-# ─────────────────────────────────────────────
 
 variable "platform_type" {
-  description = "Deployment target. Use 'hcp' for HCP Terraform and HCP Vault Dedicated, or 'enterprise' for self-hosted Terraform Enterprise and Vault Enterprise."
+  description = "Set to 'hcp' or 'enterprise' depending on your Terraform/Vault stack."
   type        = string
   default     = "hcp"
 
@@ -20,17 +18,15 @@ variable "platform_type" {
 }
 
 variable "tfe_hostname" {
-  description = "Hostname of the Terraform Enterprise instance. Only used when platform_type is 'enterprise'. Ignored for HCP Terraform."
+  description = "TFE hostname. Only relevant when platform_type = 'enterprise'."
   type        = string
   default     = "app.terraform.io"
 }
 
-# ─────────────────────────────────────────────
-# Organization and Project
-# ─────────────────────────────────────────────
+# --- Organization and Project ---
 
 variable "organization_name" {
-  description = "Name of the HCP Terraform or Terraform Enterprise organization."
+  description = "TFC/TFE organization name."
   type        = string
 
   validation {
@@ -40,7 +36,7 @@ variable "organization_name" {
 }
 
 variable "project_name" {
-  description = "Name of the project to create for the application landing zone. All workspaces and variable sets are scoped to this project."
+  description = "Project name for the landing zone. Workspaces and variable sets are scoped here."
   type        = string
 
   validation {
@@ -49,12 +45,10 @@ variable "project_name" {
   }
 }
 
-# ─────────────────────────────────────────────
-# Application Configuration
-# ─────────────────────────────────────────────
+# --- Application Configuration ---
 
 variable "application_name" {
-  description = "Short identifier for the application being onboarded. Used as a prefix in workspace names, Vault paths, and policy names."
+  description = "App identifier — used as prefix for workspace names, Vault paths, and policies."
   type        = string
 
   validation {
@@ -64,7 +58,7 @@ variable "application_name" {
 }
 
 variable "environments" {
-  description = "List of environments to provision. Each environment gets its own workspace and Vault role. Valid values are 'dev', 'staging', 'test', and 'prod'."
+  description = "Environments to create. Each gets a workspace + Vault role."
   type        = list(string)
   default     = ["dev", "prod"]
 
@@ -81,24 +75,22 @@ variable "environments" {
   }
 }
 
-# ─────────────────────────────────────────────
-# Workspace Settings
-# ─────────────────────────────────────────────
+# --- Workspace Settings ---
 
 variable "workspace_terraform_version" {
-  description = "Terraform version constraint for provisioned workspaces. Uses the latest compatible version."
+  description = "Terraform version constraint for workspaces."
   type        = string
   default     = ">= 1.6.0"
 }
 
 variable "workspace_auto_apply" {
-  description = "Whether to automatically apply successful plans on the default branch."
+  description = "Auto-apply successful plans."
   type        = bool
   default     = false
 }
 
 variable "workspace_vcs_repo" {
-  description = "VCS repository configuration for application workspaces. Set to null for CLI-driven workspaces."
+  description = "VCS repo config. null = CLI-driven workspaces."
   type = object({
     identifier     = string
     branch         = optional(string, "main")
@@ -109,19 +101,19 @@ variable "workspace_vcs_repo" {
 }
 
 variable "workspace_working_directory_pattern" {
-  description = "Pattern for workspace working directories. Use '{environment}' as a placeholder. Example: 'envs/{environment}' results in 'envs/dev', 'envs/prod'."
+  description = "Working directory pattern; {environment} is replaced per workspace (e.g. 'envs/{environment}')."
   type        = string
   default     = ""
 }
 
 variable "workspace_tags" {
-  description = "Tags to apply to every workspace created by this module."
+  description = "Tags for all workspaces."
   type        = list(string)
   default     = ["managed-by-landing-zone"]
 }
 
 variable "workspace_additional_variables" {
-  description = "Additional environment or Terraform variables to set on all workspaces. Use the category field to specify 'env' or 'terraform'."
+  description = "Extra env or terraform variables to inject into all workspaces."
   type = map(object({
     value     = string
     category  = optional(string, "env")
@@ -130,12 +122,10 @@ variable "workspace_additional_variables" {
   default = {}
 }
 
-# ─────────────────────────────────────────────
 # Team Access
-# ─────────────────────────────────────────────
 
 variable "team_access" {
-  description = "Map of team names to their project-level access. Permissions follow HCP Terraform's built-in roles."
+  description = "Team name → access level mapping for the project."
   type = map(object({
     access = string
   }))
@@ -150,18 +140,16 @@ variable "team_access" {
   }
 }
 
-# ─────────────────────────────────────────────
-# Vault Integration
-# ─────────────────────────────────────────────
+# --- Vault Integration ---
 
 variable "enable_vault_integration" {
-  description = "Whether to configure Vault resources including the JWT auth backend, roles, policies, and dynamic provider credentials on workspaces."
+  description = "Toggle Vault JWT auth, roles, policies, and dynamic creds on workspaces."
   type        = bool
   default     = true
 }
 
 variable "vault_url" {
-  description = "Full URL of the Vault cluster, including the protocol. Example: https://vault.example.com:8200"
+  description = "Vault cluster URL (e.g. https://vault.example.com:8200)."
   type        = string
   default     = ""
 
@@ -172,30 +160,25 @@ variable "vault_url" {
 }
 
 variable "vault_namespace" {
-  description = "Parent Vault namespace. For HCP Vault Dedicated this is typically 'admin'. For Vault Enterprise, set to the root namespace or leave empty."
+  description = "Parent Vault namespace ('admin' for HCP Vault, or your root namespace for Enterprise)."
   type        = string
   default     = ""
 }
 
 variable "vault_jwt_auth_path" {
-  description = "Mount path for the JWT auth method in Vault. Change this only if the default 'jwt' path is already in use."
+  description = "JWT auth mount path. Change if 'jwt' is already taken."
   type        = string
   default     = "jwt"
-
-  validation {
-    condition     = can(regex("^[a-zA-Z0-9][a-zA-Z0-9_/-]*$", var.vault_jwt_auth_path))
-    error_message = "JWT auth path must start with an alphanumeric character and contain only letters, numbers, underscores, hyphens, or slashes."
-  }
 }
 
 variable "create_vault_jwt_auth_backend" {
-  description = "Whether to create the JWT auth backend in Vault. Set to false if the backend already exists and you only need to add roles."
+  description = "Create the JWT backend, or false if it already exists."
   type        = bool
   default     = true
 }
 
 variable "vault_token_ttl" {
-  description = "Default TTL in seconds for Vault tokens issued to workspaces. HashiCorp recommends 1200 (20 minutes) for dynamic credentials."
+  description = "Default TTL (seconds) for workspace Vault tokens. 1200 = 20min per HC recommendation."
   type        = number
   default     = 1200
 
@@ -206,7 +189,7 @@ variable "vault_token_ttl" {
 }
 
 variable "vault_token_max_ttl" {
-  description = "Maximum TTL in seconds for Vault tokens. Tokens cannot be renewed beyond this duration."
+  description = "Max TTL (seconds). Tokens can't renew past this."
   type        = number
   default     = 2400
 
@@ -217,126 +200,118 @@ variable "vault_token_max_ttl" {
 }
 
 variable "vault_policies" {
-  description = "List of additional Vault policy names to attach to workspace roles. The module always includes a base 'tfc-token-self-manage' policy."
+  description = "Extra Vault policy names to attach to roles (base self-manage policy is always included)."
   type        = list(string)
   default     = []
 }
 
 variable "vault_custom_policy_hcl" {
-  description = "Map of custom Vault policy names to their HCL content. These policies are created and attached to workspace roles alongside any policies listed in vault_policies."
+  description = "Custom policies as name => HCL. Created and attached alongside vault_policies."
   type        = map(string)
   default     = {}
 }
 
 variable "enable_vault_namespace" {
-  description = "Whether to create a dedicated Vault namespace for this application. Requires Vault Enterprise or HCP Vault."
+  description = "Create a dedicated app namespace in Vault (Enterprise/HCP only)."
   type        = bool
   default     = false
 }
 
 variable "vault_namespace_path" {
-  description = "Path for the application's Vault namespace, relative to vault_namespace. Defaults to the application_name if not set."
+  description = "Namespace path relative to vault_namespace. Defaults to application_name."
   type        = string
   default     = ""
 }
 
 variable "enable_kv_secrets_engine" {
-  description = "Whether to mount a KV v2 secrets engine in the application namespace."
+  description = "Mount KV v2 in the app namespace."
   type        = bool
   default     = true
 }
 
 variable "kv_secrets_path" {
-  description = "Mount path for the KV v2 secrets engine. Relative to the application namespace."
+  description = "KV v2 mount path (relative to app namespace)."
   type        = string
   default     = "secret"
 }
 
 variable "vault_audience" {
-  description = "The audience value for workload identity tokens. This must match the bound_audiences on the JWT auth role."
+  description = "Audience claim for workload identity tokens. Must match JWT role bound_audiences."
   type        = string
   default     = "vault.workload.identity"
 }
 
 variable "enable_plan_apply_separation" {
-  description = "Whether to create separate Vault roles for plan and apply phases. When enabled, plan gets read-only access and apply gets write access."
+  description = "Separate Vault roles for plan (read-only) vs apply (write)."
   type        = bool
   default     = false
 }
 
-# ─────────────────────────────────────────────
 # Sentinel Policy Sets (Optional)
-# ─────────────────────────────────────────────
 
 variable "enable_sentinel_policies" {
-  description = "Whether to attach Sentinel policy sets to the project. Requires HCP Terraform Standard or Terraform Enterprise Plus."
+  description = "Attach Sentinel policy sets to the project. Needs TFC Standard+ or TFE Plus."
   type        = bool
   default     = false
 }
 
 variable "sentinel_policy_set_ids" {
-  description = "List of existing Sentinel policy set IDs to attach to the project."
+  description = "Sentinel policy set IDs to attach."
   type        = list(string)
   default     = []
 }
 
-# ─────────────────────────────────────────────
 # Run Triggers
-# ─────────────────────────────────────────────
 
 variable "run_trigger_source_workspace_ids" {
-  description = "List of workspace IDs that should trigger runs in this application's workspaces when they complete successfully."
+  description = "Workspace IDs whose successful runs trigger this app's workspaces."
   type        = list(string)
   default     = []
 }
 
-# ─────────────────────────────────────────────
 # Day 2 Admin Operations
-# ─────────────────────────────────────────────
 
 variable "variable_set_ids" {
-  description = "List of Variable Set IDs to attach to the project."
+  description = "Variable Set IDs to attach to the project."
   type        = list(string)
   default     = []
 }
 
 variable "slack_webhook_url" {
-  description = "Slack webhook URL for workspace notifications. Leave empty to disable."
+  description = "Slack webhook for notifications. Empty = disabled."
   type        = string
   default     = ""
   sensitive   = true
 }
 
 variable "enable_cloud_oidc" {
-  description = "Whether to configure OIDC for AWS, GCP, or Azure on workspaces."
+  description = "Set up OIDC credentials for AWS/GCP/Azure."
   type        = bool
   default     = false
 }
 
 variable "cloud_provider" {
-  description = "The target cloud provider: 'aws', 'gcp', or 'azure'."
+  description = "Target cloud: aws, gcp, or azure."
   type        = string
   default     = "aws"
 }
 
 variable "provider_role_arn" {
-  description = "The ARN of the AWS role, GCP Service Account email, or Azure Client ID to assume via OIDC."
+  description = "AWS Role ARN / GCP SA email / Azure Client ID for OIDC."
   type        = string
   default     = ""
 }
 
 variable "run_task_ids" {
-  description = "List of TFE Run Task IDs (e.g., Checkov, Infracost) to attach to workloads."
+  description = "Run Task IDs to attach (Checkov, Infracost, etc)."
   type        = list(string)
   default     = []
 }
 
-# ─────────────────────────────────────────────
 # Tags and Metadata
-# ─────────────────────────────────────────────
 
 variable "tags" {
-  description = "Additional tags to apply to all resources that support tagging."
+  description = "Extra tags for all taggable resources."
   type        = map(string)
   default     = {}
 }

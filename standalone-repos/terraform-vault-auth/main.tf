@@ -1,9 +1,6 @@
-# Vault Auth Submodule — JWT Backend, Roles, and Policies
-#
-# Configures Vault to trust workload identity tokens from HCP Terraform
-# or Terraform Enterprise. Each environment gets a dedicated role with
-# bound claims that restrict which workspace can authenticate.
-
+# JWT Auth Backend and Roles
+# Configures Vault to trust TFC/TFE workload identity tokens. 
+# Creates a role per environment with bounded claims.
 # -----------------------------------------------
 # JWT Auth Backend
 # -----------------------------------------------
@@ -33,8 +30,7 @@ resource "vault_policy" "tfc_base" {
   name      = var.base_policy_name
 
   policy = <<-HCL
-    # Required for all workspaces using dynamic provider credentials.
-    # Tokens must be able to introspect, renew, and revoke themselves.
+    # Required for dynamic provider credentials so tokens can renew/revoke themselves.
 
     path "auth/token/lookup-self" {
       capabilities = ["read"]

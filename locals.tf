@@ -1,7 +1,4 @@
-# Landing Zone Module — Computed Values and Platform Resolution
-#
-# Centralizes all platform-specific logic so that resource definitions
-# in main.tf remain clean and declarative.
+# Computed values — platform detection, namespace resolution, naming conventions.
 
 locals {
   # Platform detection
@@ -14,10 +11,8 @@ locals {
   # OIDC discovery endpoint — Vault uses this to verify workspace JWTs
   oidc_discovery_url = "https://${local.tfc_hostname}"
 
-  # Vault namespace resolution
-  # HCP Vault Dedicated tokens implicitly operate under the 'admin' namespace.
-  # Passing "admin" to resources causes relative 'admin/admin' errors.
-  # Leaving it blank allows the provider to reliably use its 'admin' default.
+  # HCP Vault: don't pass "admin" explicitly or you get admin/admin double-prefix.
+  # Empty string lets the provider handle the default.
   vault_root_namespace     = local.is_hcp ? "" : var.vault_namespace
   vault_app_namespace_path = var.vault_namespace_path != "" ? var.vault_namespace_path : var.application_name
 

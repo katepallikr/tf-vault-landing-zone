@@ -1,6 +1,6 @@
 # Terraform Landing Zone Orchestrator
 
-This repository is a **Thin Orchestration Layer** that automates application onboarding to **HCP Terraform** or **Terraform Enterprise**, with optional **Vault Enterprise** or **HCP Vault Dedicated** integration natively woven through separate, dedicated module repositories.
+Automates app onboarding to **HCP Terraform** / **Terraform Enterprise** with optional **Vault** (HCP Vault Dedicated or Enterprise) integration. The landing zone itself is thin — it wires together standalone child modules rather than defining resources directly.
 
 ## Architecture: The "Lego Block" Model
 
@@ -33,8 +33,8 @@ This Landing Zone acts as a core assembler. Instead of being a Monolith, the orc
 
 - **Decoupled Architecture** — Modules are natively segregated by focus (Workspace vs Vault vs Run-tasks)
 - **Vault integration** — JWT-based workload identity federation with no static credentials stored in Terraform
-- **Day 2 Enhancements** — Optional integrations with Checkov/Infracost (Run Tasks), Slack (Notifications), and Variable Sets seamlessly executed during workspace provisioning.
-- **Dynamic OIDC Support** — Out-of-the-box support for `TFC_WORKLOAD_IDENTITY` via AWS/GCP/Azure without Vault overhead.
+- **Day 2 ops** — Checkov/Infracost run tasks, Slack alerts, and variable set attachments
+- **Cloud OIDC** — AWS/GCP/Azure workload identity without needing Vault
 
 ## Module Ecosystem Structure
 
@@ -48,7 +48,7 @@ This Orchestrator fetches configurations from external versioned repositories. E
 - `terraform-tfc-variable-sets`
 - `terraform-tfc-notifications`
 
-A specific "Day 2 App Deploy" module `terraform-vault-aws` is also provided in the wider ecosystem for applications needing dedicated AWS Secret mounts rather than base Workspace deployments.
+`terraform-vault-aws` is included for apps that need their own AWS secrets engine mount.
 
 ## Quick Start
 

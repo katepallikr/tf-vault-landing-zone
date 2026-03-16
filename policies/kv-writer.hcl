@@ -1,7 +1,4 @@
-# KV v2 Read-Write Policy
-#
-# Grants full CRUD access to secrets under the specified path.
-# Includes soft-delete and undelete operations for KV v2.
+# Full CRUD access to secrets. Includes soft-delete/undelete.
 
 path "secret/data/{{identity.entity.name}}/*" {
   capabilities = ["create", "read", "update", "delete"]

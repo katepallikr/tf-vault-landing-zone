@@ -1,8 +1,4 @@
-# Basic Landing Zone Example
-#
-# Provisions a single project with dev and prod workspaces,
-# connected to Vault via workload identity. This is the minimum
-# viable configuration for onboarding a new application.
+# Provisions a single project with dev and prod workspaces connected to Vault.
 
 provider "tfe" {}
 

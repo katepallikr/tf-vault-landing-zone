@@ -1,7 +1,4 @@
-# Sentinel Policy: restrict-workspace-names.sentinel
-#
-# Enforces that all workspaces created by this module follow the 
-# naming convention: <application_name>-<environment>
+# Enforces <app>-<env> naming convention.
 
 import "tfplan/v2" as tfplan
 

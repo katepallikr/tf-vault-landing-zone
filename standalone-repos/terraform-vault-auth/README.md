@@ -1,5 +1,5 @@
-# Terraform Vault Auth Module
+# Vault Auth Module
 
-This standalone Terraform module configures Vault to trust JWTs emitted by HCP Terraform / TFE. It acts natively to establish secure Workload Identity federation.
+Sets up Vault to trust TFC/TFE JWTs. 
 
-**Architecture:** When called via the orchestrator, this module verifies the workspace boundaries and establishes least-privilege Vault Roles ensuring that `dev` workspaces can only request `dev` credentials.
+It bounds claims so that the `dev` workspace can only get `dev` credentials.

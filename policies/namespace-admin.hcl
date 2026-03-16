@@ -1,7 +1,4 @@
-# Namespace Administrator Policy
-#
-# Grants full administrative access within a namespace.
-# Does not grant access to parent or sibling namespaces.
+# Admin access within a namespace.
 
 path "sys/policies/acl/*" {
   capabilities = ["create", "read", "update", "delete", "list"]

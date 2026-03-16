@@ -1,6 +1,4 @@
-# Sentinel Policy: enforce-mandatory-tags.sentinel
-#
-# Ensures that all workspaces have the 'managed-by-landing-zone' tag.
+# Ensures all workspaces have 'managed-by-landing-zone' tag.
 
 import "tfplan/v2" as tfplan
 

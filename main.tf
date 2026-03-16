@@ -1,12 +1,8 @@
-# Landing Zone Orchestrator — "Thin Orchestrator" Layer
-#
-# This file acts as an orchestrator, pulling together remote Terraform modules
-# (Lego blocks) sourced from external repositories. It coordinates the creation of Workspaces,
-# Vault identities, and Day 2 administrative configurations. This file should contain almost no raw resources.
+# Root orchestrator — wires up child modules for TFC workspace provisioning,
+# Vault auth config, and optional Day 2 ops (notifications, run tasks, etc).
+# Keep raw resources out of here; everything should be a module call.
 
-# ─────────────────────────────────────────────
-# Terraform Project and Workspaces
-# ─────────────────────────────────────────────
+# --- TFC Project and Workspaces ---
 
 data "tfe_organization" "this" {
   name = var.organization_name
@@ -46,9 +42,7 @@ module "workspace" {
   sentinel_policy_set_ids          = var.enable_sentinel_policies ? var.sentinel_policy_set_ids : []
 }
 
-# ─────────────────────────────────────────────
-# Vault JWT Auth Backend and Roles
-# ─────────────────────────────────────────────
+# --- Vault JWT Auth Backend and Roles ---
 
 module "vault_auth" {
   source = "./standalone-repos/terraform-vault-auth"
@@ -74,9 +68,7 @@ module "vault_auth" {
   base_policy_name  = local.vault_base_policy_name
 }
 
-# ─────────────────────────────────────────────
-# Vault Namespace and Secrets Engine (Optional)
-# ─────────────────────────────────────────────
+# --- Vault Namespace and Secrets Engine (Optional) ---
 
 module "vault_namespace" {
   source = "./standalone-repos/terraform-vault-namespace"
@@ -90,9 +82,7 @@ module "vault_namespace" {
   tags             = var.tags
 }
 
-# ─────────────────────────────────────────────
-# Day 2 Admin Operations (Optional)
-# ─────────────────────────────────────────────
+# --- Day 2 Admin Operations (Optional) ---
 
 module "variable_sets" {
   source = "./standalone-repos/terraform-tfc-variable-sets"

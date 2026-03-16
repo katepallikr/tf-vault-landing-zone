@@ -1,6 +1,4 @@
-# Input Validation Tests
-#
-# Confirms that variable validation rules reject invalid inputs.
+# Variable validation rule tests.
 
 mock_provider "tfe" {}
 mock_provider "vault" {}

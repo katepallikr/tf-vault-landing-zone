@@ -1,7 +1,4 @@
-# Vault Namespace Submodule — Isolated Namespace and Secrets Engine
-#
-# Creates a child namespace in Vault Enterprise or HCP Vault Dedicated.
-# Optionally mounts a KV v2 secrets engine for the application.
+# Creates child namespace and optional KV engine.
 
 resource "vault_namespace" "this" {
   namespace = var.parent_namespace != "" ? var.parent_namespace : null

@@ -1,7 +1,4 @@
-# Feature Flag Tests
-#
-# Validates that feature flags correctly enable or disable
-# optional resources like Vault integration and namespaces.
+# Validates optional resource toggles (Vault, namespaces, etc).
 
 mock_provider "tfe" {}
 mock_provider "vault" {}

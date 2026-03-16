@@ -3,8 +3,8 @@
 
 # Security-sensitive files require security team review
 /policies/     @security-team @platform-team
-/modules/vault-auth/  @security-team @platform-team
-/modules/vault-namespace/ @security-team @platform-team
+/standalone-repos/terraform-vault-auth/  @security-team @platform-team
+/standalone-repos/terraform-vault-namespace/ @security-team @platform-team
 
 # CI/CD and tooling
 /.github/      @devops-team @platform-team

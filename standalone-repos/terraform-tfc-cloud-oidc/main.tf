@@ -9,23 +9,21 @@ terraform {
 }
 
 variable "workspace_ids" {
-  description = "Map of workspace keys to their IDs."
+  description = "Workspace ID map."
   type        = map(string)
 }
 
 variable "cloud_provider" {
-  description = "The target cloud provider: 'aws', 'gcp', or 'azure'."
+  description = "Target cloud: aws, gcp, azure."
   type        = string
 }
 
 variable "provider_role_arn" {
-  description = "The ARN of the AWS role, GCP Service Account email, or Azure Client ID to assume via OIDC."
+  description = "Target role ARN/email/client ID."
   type        = string
 }
 
-# -----------------------------------------------------------------------------
-# Workload Identity Constants (Cloud-neutral logic)
-# -----------------------------------------------------------------------------
+# Cloud-neutral Workload Identity Constants
 
 locals {
   is_aws   = var.cloud_provider == "aws"
@@ -59,7 +57,7 @@ locals {
 }
 
 resource "tfe_variable" "oidc" {
-  # Create a composite key map: "{workspace_key}_{var_name}" => var_value
+  # "{workspace_key}_{var_name}" => var_value
   for_each = {
     for pair in flatten([
       for ws_key, ws_id in var.workspace_ids : [
@@ -78,7 +76,7 @@ resource "tfe_variable" "oidc" {
   key          = each.value.name
   value        = each.value.value
   category     = each.value.category
-  description  = "OIDC Config for ${var.cloud_provider} injected by Landing Zone"
+  description  = "OIDC Config for ${var.cloud_provider}"
 
   lifecycle {
     precondition {

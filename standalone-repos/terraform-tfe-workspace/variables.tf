@@ -1,20 +1,20 @@
 variable "organization_name" {
-  description = "Name of the Terraform organization."
+  description = "TFC/TFE org name."
   type        = string
 }
 
 variable "project_name" {
-  description = "Name of the project to create."
+  description = "TFC project."
   type        = string
 }
 
 variable "application_name" {
-  description = "Short identifier for the application."
+  description = "App name prefix."
   type        = string
 }
 
 variable "workspace_map" {
-  description = "Map of environment to workspace configuration."
+  description = "Environment => workspace map."
   type = map(object({
     workspace_name = string
     environment    = string
@@ -23,19 +23,19 @@ variable "workspace_map" {
 }
 
 variable "terraform_version" {
-  description = "Terraform version constraint for workspaces."
+  description = "TF version."
   type        = string
   default     = ">= 1.6.0"
 }
 
 variable "auto_apply" {
-  description = "Whether to auto-apply successful plans."
+  description = "Auto-apply plans."
   type        = bool
   default     = false
 }
 
 variable "vcs_repo" {
-  description = "VCS repository configuration. Null for CLI-driven workspaces."
+  description = "VCS repo."
   type = object({
     identifier     = string
     branch         = optional(string, "main")
@@ -46,13 +46,13 @@ variable "vcs_repo" {
 }
 
 variable "workspace_tags" {
-  description = "Tags to apply to workspaces."
+  description = "Workspace tags."
   type        = list(string)
   default     = []
 }
 
 variable "team_access" {
-  description = "Map of team names to access levels."
+  description = "Team access map."
   type = map(object({
     access = string
   }))
@@ -60,7 +60,7 @@ variable "team_access" {
 }
 
 variable "additional_variables" {
-  description = "Additional variables to set on all workspaces."
+  description = "Extra variables."
   type = map(object({
     value     = string
     category  = optional(string, "env")
@@ -70,37 +70,37 @@ variable "additional_variables" {
 }
 
 variable "enable_vault_integration" {
-  description = "Whether to set Vault dynamic credential variables."
+  description = "Enable Vault dynamic credentials."
   type        = bool
   default     = false
 }
 
 variable "vault_url" {
-  description = "Vault cluster URL."
+  description = "Vault URL."
   type        = string
   default     = ""
 }
 
 variable "vault_namespace" {
-  description = "Vault namespace for workspace authentication."
+  description = "Vault namespace."
   type        = string
   default     = ""
 }
 
 variable "vault_jwt_auth_path" {
-  description = "Vault JWT auth mount path."
+  description = "JWT auth mount."
   type        = string
   default     = "jwt"
 }
 
 variable "vault_audience" {
-  description = "Workload identity audience claim."
+  description = "Audience claim."
   type        = string
   default     = "vault.workload.identity"
 }
 
 variable "vault_role_map" {
-  description = "Map of environment to Vault role configuration."
+  description = "Env => Role config."
   type = map(object({
     role_name         = string
     plan_role_name    = string
@@ -112,7 +112,7 @@ variable "vault_role_map" {
 }
 
 variable "enable_plan_apply_separation" {
-  description = "Whether to use separate plan/apply Vault roles."
+  description = "Separate plan/apply."
   type        = bool
   default     = false
 }

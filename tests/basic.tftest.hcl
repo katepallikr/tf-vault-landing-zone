@@ -1,7 +1,4 @@
-# Basic Validation Tests
-#
-# Verifies core module behavior using mock providers.
-# No real infrastructure is created — safe to run in CI.
+# Core module behavior tests with mock providers.
 
 mock_provider "tfe" {}
 mock_provider "vault" {}

@@ -1,12 +1,4 @@
-# Complete Landing Zone Example
-#
-# Demonstrates every feature of the landing zone module:
-# - Multiple environments with VCS-connected workspaces
-# - Dedicated Vault namespace with KV secrets engine
-# - Plan/apply role separation for least-privilege access
-# - Team access controls
-# - Custom Vault policies
-# - Sentinel policy attachment
+# Demonstrates all features including plan/apply separation, Sentinels, and custom policies.
 
 provider "tfe" {}
 

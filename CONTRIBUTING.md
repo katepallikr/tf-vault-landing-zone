@@ -1,8 +1,5 @@
 # Contributing
 
-Thank you for considering a contribution to this module. This guide covers
-everything you need to get started.
-
 ## Development Setup
 
 ### Prerequisites

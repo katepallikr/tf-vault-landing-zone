@@ -1,8 +1,4 @@
-# Vault AWS Secrets Engine Submodule
-#
-# Mounts the AWS secrets engine and configures roles to issue
-# dynamic AWS credentials (STS Assumed Roles) for applications.
-
+# Mounts AWS secrets engine and configures STS assumed roles.
 # -----------------------------------------------
 # Secrets Engine Mount
 # -----------------------------------------------
@@ -13,12 +9,10 @@ resource "vault_aws_secret_backend" "aws" {
   description = "AWS Secrets Engine for ${var.application_name}"
   region      = var.region
 
-  # Only pass credentials if they are provided; otherwise Vault
-  # relies on its own underlying IAM instance profile / workload identity.
+  # Vault uses its own instance profile if creds aren't passed
   access_key = var.vault_aws_access_key
   secret_key = var.vault_aws_secret_key
 
-  # General performance tuning for generic AWS accounts
   default_lease_ttl_seconds = 3600
   max_lease_ttl_seconds     = 14400
 }
@@ -27,7 +21,7 @@ resource "vault_aws_secret_backend" "aws" {
 # Dynamic Roles Configuration
 # -----------------------------------------------
 
-# Maps a Vault logical role name to a physical AWS IAM Role ARN
+# Map Vault logical role -> AWS IAM Role ARN
 resource "vault_aws_secret_backend_role" "assumed_roles" {
   for_each = var.roles
 
@@ -44,8 +38,7 @@ resource "vault_aws_secret_backend_role" "assumed_roles" {
 # Terraform Workspace Policy Integration
 # -----------------------------------------------
 
-# Automatically creates a read policy so that Terraform Workspaces
-# can request credentials from the roles defined above.
+# Read policy for TFC workspaces to request these creds.
 resource "vault_policy" "tfc_aws_secrets_reader" {
   count = length(var.tfc_workspace_vault_roles) > 0 ? 1 : 0
 
@@ -53,13 +46,13 @@ resource "vault_policy" "tfc_aws_secrets_reader" {
   name      = "${var.application_name}-aws-secrets-reader"
 
   policy = <<-HCL
-    # Grant access to read all credentials within this specific AWS mount
+    # Allow reading creds
     %{for role_name in keys(var.roles)}
     path "${vault_aws_secret_backend.aws.path}/creds/${role_name}" {
       capabilities = ["read"]
     }
     
-    # Required for STS AssumeRole tokens
+    # For STS AssumeRole tokens
     path "${vault_aws_secret_backend.aws.path}/sts/${role_name}" {
       capabilities = ["read"]
     }
@@ -67,7 +60,5 @@ resource "vault_policy" "tfc_aws_secrets_reader" {
   HCL
 }
 
-# In a real environment, you would use vault_jwt_auth_backend_role_policy 
-# or an orchestrator to attach this policy to the TFC workspace tokens.
-# Since TFC workspace tokens are managed in a separate repository (terraform-vault-auth),
-# we export the policy name so the orchestrator can attach it over there.
+# TFC workspace tokens are managed in terraform-vault-auth.
+# Export this policy name so the orchestrator can attach it over there.

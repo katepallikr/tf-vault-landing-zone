@@ -11,43 +11,43 @@ terraform {
 }
 
 variable "vault_namespace" {
-  description = "The target Vault namespace where the AWS secrets engine will be mounted (e.g., 'admin/my-app')."
+  description = "Target Vault namespace (e.g., 'admin/my-app')."
   type        = string
 }
 
 variable "application_name" {
-  description = "The name of the application. Used as a prefix for policies and mount paths."
+  description = "App name prefix."
   type        = string
 }
 
 variable "mount_path" {
-  description = "The path where the AWS secrets engine will be mounted. Defaults to 'aws'."
+  description = "AWS engine mount path."
   type        = string
   default     = "aws"
 }
 
 variable "vault_aws_access_key" {
-  description = "The AWS access key ID for Vault to use as its root credentials. If omitted, Vault will attempt to use its own EC2/EKS instance profile."
+  description = "AWS access key for Vault root creds. Null = use instance profile."
   type        = string
   default     = null
   sensitive   = true
 }
 
 variable "vault_aws_secret_key" {
-  description = "The AWS secret access key for Vault to use as its root credentials."
+  description = "AWS secret key."
   type        = string
   default     = null
   sensitive   = true
 }
 
 variable "region" {
-  description = "The default AWS region for STS tokens (e.g., 'us-east-1')."
+  description = "Default AWS region."
   type        = string
   default     = "us-east-1"
 }
 
 variable "roles" {
-  description = "A map of Vault roles to create. The key is the Vault role name, and the value is the AWS IAM role ARN to assume."
+  description = "Map of Vault roles to AWS IAM Role ARNs."
   type = map(object({
     iam_role_arn    = string
     credential_type = optional(string, "assumed_role")
@@ -57,7 +57,7 @@ variable "roles" {
 }
 
 variable "tfc_workspace_vault_roles" {
-  description = "A list of TFC Vault Roles that need permission to request these AWS credentials. This auto-generates a Vault policy."
+  description = "TFC Vault Roles needing access to these credentials."
   type        = list(string)
   default     = []
 }

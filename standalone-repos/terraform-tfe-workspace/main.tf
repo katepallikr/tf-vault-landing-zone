@@ -1,5 +1,4 @@
-# Workspace Submodule — Project, Workspaces, and Dynamic Credentials
-
+# Provisions TFC/TFE project, workspaces, and injects Vault variables.
 resource "tfe_project" "this" {
   organization = var.organization_name
   name         = var.project_name
@@ -55,7 +54,7 @@ resource "tfe_variable" "vault_provider_auth" {
   key          = "TFC_VAULT_PROVIDER_AUTH"
   value        = "true"
   category     = "env"
-  description  = "Enables workload identity integration with Vault."
+  description  = "Enable Vault integration."
 }
 
 resource "tfe_variable" "vault_addr" {
@@ -65,7 +64,7 @@ resource "tfe_variable" "vault_addr" {
   value        = var.vault_url
   category     = "env"
   sensitive    = true
-  description  = "Vault cluster address for dynamic credentials."
+  description  = "Vault URL."
 }
 
 resource "tfe_variable" "vault_namespace" {
@@ -74,7 +73,7 @@ resource "tfe_variable" "vault_namespace" {
   key          = "TFC_VAULT_NAMESPACE"
   value        = var.vault_namespace
   category     = "env"
-  description  = "Vault namespace for workspace authentication."
+  description  = "Vault namespace."
 }
 
 resource "tfe_variable" "vault_auth_path" {
@@ -83,7 +82,7 @@ resource "tfe_variable" "vault_auth_path" {
   key          = "TFC_VAULT_AUTH_PATH"
   value        = var.vault_jwt_auth_path
   category     = "env"
-  description  = "Mount path for the Vault JWT auth backend."
+  description  = "JWT auth mount path."
 }
 
 resource "tfe_variable" "vault_run_role" {
@@ -92,7 +91,7 @@ resource "tfe_variable" "vault_run_role" {
   key          = "TFC_VAULT_RUN_ROLE"
   value        = var.vault_role_map[each.key].role_name
   category     = "env"
-  description  = "Vault role used by this workspace for authentication."
+  description  = "Workspace Vault role."
 }
 
 resource "tfe_variable" "vault_plan_role" {
@@ -101,7 +100,7 @@ resource "tfe_variable" "vault_plan_role" {
   key          = "TFC_VAULT_PLAN_ROLE"
   value        = var.vault_role_map[each.key].plan_role_name
   category     = "env"
-  description  = "Vault role for the plan phase (read-only)."
+  description  = "Vault role for plan."
 }
 
 resource "tfe_variable" "vault_apply_role" {
@@ -110,7 +109,7 @@ resource "tfe_variable" "vault_apply_role" {
   key          = "TFC_VAULT_APPLY_ROLE"
   value        = var.vault_role_map[each.key].role_name
   category     = "env"
-  description  = "Vault role for the apply phase (read-write)."
+  description  = "Vault role for apply."
 }
 
 resource "tfe_variable" "additional" {
@@ -143,3 +142,10 @@ resource "tfe_project_policy_set" "this" {
   project_id    = tfe_project.this.id
   policy_set_id = each.value
 }
+
+# resource "tfe_workspace_run_task" "this" {
+#   for_each     = var.run_task_ids
+#   workspace_id = tfe_workspace.this[each.key].id
+#   task_id      = each.value
+#   enforcement_level = "advisory"
+# }
