@@ -20,12 +20,13 @@ This Landing Zone acts as a core assembler. Instead of being a Monolith, the orc
                    │                      │
          ┌─────────▼────────┐   ┌─────────▼─────────────────┐
          │ Terraform Cloud  │   │ Vault Integrations        │
-         │ Configuration    │   │                           │
+         │ Configuration    │   │ (Dynamic Credentials)     │
          │                  │   │                           │
-         ├── tfe_workspace  │   ├── vault_auth              │
+         ├── tfe_workspace  │   ├── vault_auth (JWT OIDC)   │
          ├── run_tasks      │   ├── vault_namespace         │
-         ├── variable_sets  │   └── vault_aws               │
-         └── notifications  │                               │
+         ├── variable_sets  │   └── vault_aws (AWS STS)     │
+         ├── notifications  │                               │
+         └── cloud_oidc     │                               │
          └──────────────────┘   └───────────────────────────┘
 ```
 

@@ -15,6 +15,8 @@ module "vault_aws_auth" {
 
   roles = {
     "app-admin" = {
+      # SECURITY: Ensure this IAM Role has a strict IAM Permission Boundary
+      # attached natively in AWS to prevent STS tokens from escalating privileges.
       iam_role_arn = var.application_iam_role_arn
     }
   }

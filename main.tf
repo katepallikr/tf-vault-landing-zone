@@ -16,6 +16,7 @@ data "tfe_organization" "this" {
 }
 
 module "workspace" {
+  # source = "git::https://github.com/org/terraform-tfe-workspace.git?ref=v1.0.0"
   source = "./standalone-repos/terraform-tfe-workspace"
 
   organization_name    = var.organization_name
@@ -32,7 +33,7 @@ module "workspace" {
   # Vault connectivity — only injected when Vault integration is active
   enable_vault_integration     = var.enable_vault_integration
   vault_url                    = var.vault_url
-  vault_namespace              = local.vault_auth_namespace
+  vault_namespace              = var.vault_namespace # explicitly pass the variable to TFC
   vault_jwt_auth_path          = var.vault_jwt_auth_path
   vault_audience               = var.vault_audience
   vault_role_map               = local.vault_role_map
@@ -45,6 +46,7 @@ module "workspace" {
 # --- Vault JWT Auth Backend and Roles ---
 
 module "vault_auth" {
+  # source = "git::https://github.com/org/terraform-vault-auth.git?ref=v1.0.0"
   source = "./standalone-repos/terraform-vault-auth"
   count  = var.enable_vault_integration ? 1 : 0
 
@@ -71,6 +73,7 @@ module "vault_auth" {
 # --- Vault Namespace and Secrets Engine (Optional) ---
 
 module "vault_namespace" {
+  # source = "git::https://github.com/org/terraform-vault-namespace.git?ref=v1.0.0"
   source = "./standalone-repos/terraform-vault-namespace"
   count  = var.enable_vault_namespace ? 1 : 0
 
@@ -85,6 +88,7 @@ module "vault_namespace" {
 # --- Day 2 Admin Operations (Optional) ---
 
 module "variable_sets" {
+  # source = "git::https://github.com/org/terraform-tfc-variable-sets.git?ref=v1.0.0"
   source = "./standalone-repos/terraform-tfc-variable-sets"
   count  = length(var.variable_set_ids) > 0 ? 1 : 0
 
@@ -93,6 +97,7 @@ module "variable_sets" {
 }
 
 module "notifications" {
+  # source = "git::https://github.com/org/terraform-tfc-notifications.git?ref=v1.0.0"
   source = "./standalone-repos/terraform-tfc-notifications"
   count  = var.slack_webhook_url != "" ? 1 : 0
 
@@ -101,6 +106,7 @@ module "notifications" {
 }
 
 module "cloud_oidc" {
+  # source = "git::https://github.com/org/terraform-tfc-cloud-oidc.git?ref=v1.0.0"
   source = "./standalone-repos/terraform-tfc-cloud-oidc"
   count  = var.enable_cloud_oidc ? 1 : 0
 
@@ -110,6 +116,7 @@ module "cloud_oidc" {
 }
 
 module "run_tasks" {
+  # source = "git::https://github.com/org/terraform-tfc-run-tasks.git?ref=v1.0.0"
   source   = "./standalone-repos/terraform-tfc-run-tasks"
   for_each = toset(var.run_task_ids)
 

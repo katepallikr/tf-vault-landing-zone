@@ -15,6 +15,10 @@ resource "tfe_workspace" "this" {
   tag_names         = concat(var.workspace_tags, [each.value.environment])
   working_directory = each.value.working_dir != "" ? each.value.working_dir : null
 
+  execution_mode                 = "remote"
+  allow_destroy_plan             = true
+  auto_destroy_activity_duration = each.value.auto_destroy_activity_duration != "" ? each.value.auto_destroy_activity_duration : null
+
   dynamic "vcs_repo" {
     for_each = var.vcs_repo != null ? [var.vcs_repo] : []
     content {

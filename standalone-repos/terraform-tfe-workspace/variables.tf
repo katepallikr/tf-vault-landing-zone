@@ -16,9 +16,10 @@ variable "application_name" {
 variable "workspace_map" {
   description = "Environment => workspace map."
   type = map(object({
-    workspace_name = string
-    environment    = string
-    working_dir    = string
+    workspace_name                 = string
+    environment                    = string
+    working_dir                    = string
+    auto_destroy_activity_duration = optional(string, "")
   }))
 }
 

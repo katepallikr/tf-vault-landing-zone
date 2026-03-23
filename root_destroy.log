@@ -1,0 +1,460 @@
+[0m[1mmodule.vault_auth[0].vault_policy.tfc_base: Refreshing state... [id=payment-api-tfc-base][0m
+[0m[1mmodule.vault_auth[0].vault_policy.custom["payment-api-admin"]: Refreshing state... [id=payment-api-admin][0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend.tfc[0]: Refreshing state... [id=jwt][0m
+[0m[1mdata.tfe_organization.this: Reading...[0m[0m
+[0m[1mmodule.workspace.tfe_project.this: Refreshing state... [id=prj-qoVeKGQdpG8ZjkUF][0m
+[0m[1mmodule.workspace.tfe_workspace.this["prod"]: Refreshing state... [id=ws-7YKZ41eSuycvicYV][0m
+[0m[1mmodule.workspace.tfe_workspace.this["dev"]: Refreshing state... [id=ws-zrAVrwTyXPRGPofH][0m
+[0m[1mdata.tfe_organization.this: Read complete after 0s [id=org-x7YRmzXtkgUfZdPS][0m
+[0m[1mmodule.workspace.tfe_variable.vault_addr["dev"]: Refreshing state... [id=var-J8sLj6YcYgHPgu1X][0m
+[0m[1mmodule.workspace.tfe_variable.vault_run_role["prod"]: Refreshing state... [id=var-7gPMousoKJQFaZzc][0m
+[0m[1mmodule.workspace.tfe_variable.vault_run_role["dev"]: Refreshing state... [id=var-RRtQQWEXDTtGPJT2][0m
+[0m[1mmodule.workspace.tfe_variable.vault_addr["prod"]: Refreshing state... [id=var-PiCKE145kWVBbEzu][0m
+[0m[1mmodule.workspace.tfe_variable.vault_provider_auth["dev"]: Refreshing state... [id=var-WbeWxuQtZVSFqmot][0m
+[0m[1mmodule.workspace.tfe_variable.vault_provider_auth["prod"]: Refreshing state... [id=var-4XB2YCdBNw3buPkR][0m
+[0m[1mmodule.workspace.tfe_variable.vault_namespace["dev"]: Refreshing state... [id=var-y2ymC9tRM3gQ82uu][0m
+[0m[1mmodule.workspace.tfe_variable.vault_auth_path["prod"]: Refreshing state... [id=var-AFVShsZhGaaxMtDT][0m
+[0m[1mmodule.workspace.tfe_variable.vault_namespace["prod"]: Refreshing state... [id=var-dRCdjMPAARq1e9Di][0m
+[0m[1mmodule.workspace.tfe_variable.vault_auth_path["dev"]: Refreshing state... [id=var-Sb9ef3JpZ6KNaNJU][0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend_role.workspace["prod"]: Refreshing state... [id=auth/jwt/role/payment-api-tfc-prod][0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend_role.workspace["dev"]: Refreshing state... [id=auth/jwt/role/payment-api-tfc-dev][0m
+
+Terraform used the selected providers to generate the following execution
+plan. Resource actions are indicated with the following symbols:
+  [31m-[0m destroy[0m
+
+Terraform will perform the following actions:
+
+[1m  # module.vault_auth[0].vault_jwt_auth_backend.tfc[0][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "vault_jwt_auth_backend" "tfc" {
+      [31m-[0m[0m accessor               = "auth_jwt_70d88e08" [90m-> null[0m[0m
+      [31m-[0m[0m bound_issuer           = "https://app.terraform.io" [90m-> null[0m[0m
+      [31m-[0m[0m disable_remount        = false [90m-> null[0m[0m
+      [31m-[0m[0m id                     = "jwt" [90m-> null[0m[0m
+      [31m-[0m[0m jwks_pairs             = [] [90m-> null[0m[0m
+      [31m-[0m[0m jwt_supported_algs     = [] [90m-> null[0m[0m
+      [31m-[0m[0m jwt_validation_pubkeys = [] [90m-> null[0m[0m
+      [31m-[0m[0m local                  = false [90m-> null[0m[0m
+      [31m-[0m[0m namespace_in_state     = true [90m-> null[0m[0m
+      [31m-[0m[0m oidc_discovery_url     = "https://app.terraform.io" [90m-> null[0m[0m
+      [31m-[0m[0m oidc_response_types    = [] [90m-> null[0m[0m
+      [31m-[0m[0m path                   = "jwt" [90m-> null[0m[0m
+      [31m-[0m[0m provider_config        = {} [90m-> null[0m[0m
+      [31m-[0m[0m tune                   = [
+          [31m-[0m[0m {
+              [31m-[0m[0m allowed_response_headers     = []
+              [31m-[0m[0m audit_non_hmac_request_keys  = []
+              [31m-[0m[0m audit_non_hmac_response_keys = []
+              [31m-[0m[0m default_lease_ttl            = "1200s"
+              [31m-[0m[0m max_lease_ttl                = "2400s"
+              [31m-[0m[0m passthrough_request_headers  = []
+              [31m-[0m[0m token_type                   = "default-service"
+                [90m# (1 unchanged attribute hidden)[0m[0m
+            },
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m type                   = "jwt" [90m-> null[0m[0m
+        [90m# (6 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.vault_auth[0].vault_jwt_auth_backend_role.workspace["dev"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "vault_jwt_auth_backend_role" "workspace" {
+      [31m-[0m[0m alias_metadata               = {} [90m-> null[0m[0m
+      [31m-[0m[0m backend                      = "jwt" [90m-> null[0m[0m
+      [31m-[0m[0m bound_audiences              = [
+          [31m-[0m[0m "vault.workload.identity",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m bound_claims                 = {
+          [31m-[0m[0m "sub" = "organization:hashicorp-kranthi:project:landing-zone-test:workspace:payment-api-dev:run_phase:*"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m bound_claims_type            = "glob" [90m-> null[0m[0m
+      [31m-[0m[0m clock_skew_leeway            = 0 [90m-> null[0m[0m
+      [31m-[0m[0m disable_bound_claims_parsing = false [90m-> null[0m[0m
+      [31m-[0m[0m expiration_leeway            = 0 [90m-> null[0m[0m
+      [31m-[0m[0m id                           = "auth/jwt/role/payment-api-tfc-dev" [90m-> null[0m[0m
+      [31m-[0m[0m max_age                      = 0 [90m-> null[0m[0m
+      [31m-[0m[0m not_before_leeway            = 0 [90m-> null[0m[0m
+      [31m-[0m[0m oidc_scopes                  = [] [90m-> null[0m[0m
+      [31m-[0m[0m role_name                    = "payment-api-tfc-dev" [90m-> null[0m[0m
+      [31m-[0m[0m role_type                    = "jwt" [90m-> null[0m[0m
+      [31m-[0m[0m token_bound_cidrs            = [] [90m-> null[0m[0m
+      [31m-[0m[0m token_explicit_max_ttl       = 0 [90m-> null[0m[0m
+      [31m-[0m[0m token_max_ttl                = 2400 [90m-> null[0m[0m
+      [31m-[0m[0m token_no_default_policy      = false [90m-> null[0m[0m
+      [31m-[0m[0m token_num_uses               = 0 [90m-> null[0m[0m
+      [31m-[0m[0m token_period                 = 0 [90m-> null[0m[0m
+      [31m-[0m[0m token_policies               = [
+          [31m-[0m[0m "payment-api-admin",
+          [31m-[0m[0m "payment-api-tfc-base",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m token_ttl                    = 1200 [90m-> null[0m[0m
+      [31m-[0m[0m token_type                   = "default" [90m-> null[0m[0m
+      [31m-[0m[0m user_claim                   = "terraform_full_workspace" [90m-> null[0m[0m
+      [31m-[0m[0m user_claim_json_pointer      = false [90m-> null[0m[0m
+      [31m-[0m[0m verbose_oidc_logging         = false [90m-> null[0m[0m
+        [90m# (2 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.vault_auth[0].vault_jwt_auth_backend_role.workspace["prod"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "vault_jwt_auth_backend_role" "workspace" {
+      [31m-[0m[0m alias_metadata               = {} [90m-> null[0m[0m
+      [31m-[0m[0m backend                      = "jwt" [90m-> null[0m[0m
+      [31m-[0m[0m bound_audiences              = [
+          [31m-[0m[0m "vault.workload.identity",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m bound_claims                 = {
+          [31m-[0m[0m "sub" = "organization:hashicorp-kranthi:project:landing-zone-test:workspace:payment-api-prod:run_phase:*"
+        } [90m-> null[0m[0m
+      [31m-[0m[0m bound_claims_type            = "glob" [90m-> null[0m[0m
+      [31m-[0m[0m clock_skew_leeway            = 0 [90m-> null[0m[0m
+      [31m-[0m[0m disable_bound_claims_parsing = false [90m-> null[0m[0m
+      [31m-[0m[0m expiration_leeway            = 0 [90m-> null[0m[0m
+      [31m-[0m[0m id                           = "auth/jwt/role/payment-api-tfc-prod" [90m-> null[0m[0m
+      [31m-[0m[0m max_age                      = 0 [90m-> null[0m[0m
+      [31m-[0m[0m not_before_leeway            = 0 [90m-> null[0m[0m
+      [31m-[0m[0m oidc_scopes                  = [] [90m-> null[0m[0m
+      [31m-[0m[0m role_name                    = "payment-api-tfc-prod" [90m-> null[0m[0m
+      [31m-[0m[0m role_type                    = "jwt" [90m-> null[0m[0m
+      [31m-[0m[0m token_bound_cidrs            = [] [90m-> null[0m[0m
+      [31m-[0m[0m token_explicit_max_ttl       = 0 [90m-> null[0m[0m
+      [31m-[0m[0m token_max_ttl                = 2400 [90m-> null[0m[0m
+      [31m-[0m[0m token_no_default_policy      = false [90m-> null[0m[0m
+      [31m-[0m[0m token_num_uses               = 0 [90m-> null[0m[0m
+      [31m-[0m[0m token_period                 = 0 [90m-> null[0m[0m
+      [31m-[0m[0m token_policies               = [
+          [31m-[0m[0m "payment-api-admin",
+          [31m-[0m[0m "payment-api-tfc-base",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m token_ttl                    = 1200 [90m-> null[0m[0m
+      [31m-[0m[0m token_type                   = "default" [90m-> null[0m[0m
+      [31m-[0m[0m user_claim                   = "terraform_full_workspace" [90m-> null[0m[0m
+      [31m-[0m[0m user_claim_json_pointer      = false [90m-> null[0m[0m
+      [31m-[0m[0m verbose_oidc_logging         = false [90m-> null[0m[0m
+        [90m# (2 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.vault_auth[0].vault_policy.custom["payment-api-admin"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "vault_policy" "custom" {
+      [31m-[0m[0m id     = "payment-api-admin" [90m-> null[0m[0m
+      [31m-[0m[0m name   = "payment-api-admin" [90m-> null[0m[0m
+      [31m-[0m[0m policy = <<-EOT
+            path "sys/mounts/*" {
+              capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+            }
+            path "sys/mounts" {
+              capabilities = ["read", "list"]
+            }
+            path "aws/*" {
+              capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+            }
+            path "sys/policies/acl/*" {
+              capabilities = ["create", "read", "update", "delete", "list", "sudo"]
+            }
+        EOT [90m-> null[0m[0m
+    }
+
+[1m  # module.vault_auth[0].vault_policy.tfc_base[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "vault_policy" "tfc_base" {
+      [31m-[0m[0m id     = "payment-api-tfc-base" [90m-> null[0m[0m
+      [31m-[0m[0m name   = "payment-api-tfc-base" [90m-> null[0m[0m
+      [31m-[0m[0m policy = <<-EOT
+            # Required for dynamic provider credentials so tokens can renew/revoke themselves.
+            
+            path "auth/token/lookup-self" {
+              capabilities = ["read"]
+            }
+            
+            path "auth/token/renew-self" {
+              capabilities = ["update"]
+            }
+            
+            path "auth/token/revoke-self" {
+              capabilities = ["update"]
+            }
+        EOT [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_project.this[0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_project" "this" {
+      [31m-[0m[0m id           = "prj-qoVeKGQdpG8ZjkUF" [90m-> null[0m[0m
+      [31m-[0m[0m name         = "landing-zone-test" [90m-> null[0m[0m
+      [31m-[0m[0m organization = "hashicorp-kranthi" [90m-> null[0m[0m
+      [31m-[0m[0m tags         = {} [90m-> null[0m[0m
+        [90m# (1 unchanged attribute hidden)[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_addr["dev"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_addr" {
+      [31m-[0m[0m category     = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description  = "Vault URL." [90m-> null[0m[0m
+      [31m-[0m[0m hcl          = false [90m-> null[0m[0m
+      [31m-[0m[0m id           = "var-J8sLj6YcYgHPgu1X" [90m-> null[0m[0m
+      [31m-[0m[0m key          = "TFC_VAULT_ADDR" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive    = true [90m-> null[0m[0m
+      [31m-[0m[0m value        = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id = "ws-zrAVrwTyXPRGPofH" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_addr["prod"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_addr" {
+      [31m-[0m[0m category     = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description  = "Vault URL." [90m-> null[0m[0m
+      [31m-[0m[0m hcl          = false [90m-> null[0m[0m
+      [31m-[0m[0m id           = "var-PiCKE145kWVBbEzu" [90m-> null[0m[0m
+      [31m-[0m[0m key          = "TFC_VAULT_ADDR" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive    = true [90m-> null[0m[0m
+      [31m-[0m[0m value        = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id = "ws-7YKZ41eSuycvicYV" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_auth_path["dev"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_auth_path" {
+      [31m-[0m[0m category       = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description    = "JWT auth mount path." [90m-> null[0m[0m
+      [31m-[0m[0m hcl            = false [90m-> null[0m[0m
+      [31m-[0m[0m id             = "var-Sb9ef3JpZ6KNaNJU" [90m-> null[0m[0m
+      [31m-[0m[0m key            = "TFC_VAULT_AUTH_PATH" [90m-> null[0m[0m
+      [31m-[0m[0m readable_value = "jwt" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive      = false [90m-> null[0m[0m
+      [31m-[0m[0m value          = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id   = "ws-zrAVrwTyXPRGPofH" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_auth_path["prod"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_auth_path" {
+      [31m-[0m[0m category       = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description    = "JWT auth mount path." [90m-> null[0m[0m
+      [31m-[0m[0m hcl            = false [90m-> null[0m[0m
+      [31m-[0m[0m id             = "var-AFVShsZhGaaxMtDT" [90m-> null[0m[0m
+      [31m-[0m[0m key            = "TFC_VAULT_AUTH_PATH" [90m-> null[0m[0m
+      [31m-[0m[0m readable_value = "jwt" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive      = false [90m-> null[0m[0m
+      [31m-[0m[0m value          = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id   = "ws-7YKZ41eSuycvicYV" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_namespace["dev"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_namespace" {
+      [31m-[0m[0m category       = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description    = "Vault namespace." [90m-> null[0m[0m
+      [31m-[0m[0m hcl            = false [90m-> null[0m[0m
+      [31m-[0m[0m id             = "var-y2ymC9tRM3gQ82uu" [90m-> null[0m[0m
+      [31m-[0m[0m key            = "TFC_VAULT_NAMESPACE" [90m-> null[0m[0m
+      [31m-[0m[0m readable_value = "admin" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive      = false [90m-> null[0m[0m
+      [31m-[0m[0m value          = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id   = "ws-zrAVrwTyXPRGPofH" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_namespace["prod"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_namespace" {
+      [31m-[0m[0m category       = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description    = "Vault namespace." [90m-> null[0m[0m
+      [31m-[0m[0m hcl            = false [90m-> null[0m[0m
+      [31m-[0m[0m id             = "var-dRCdjMPAARq1e9Di" [90m-> null[0m[0m
+      [31m-[0m[0m key            = "TFC_VAULT_NAMESPACE" [90m-> null[0m[0m
+      [31m-[0m[0m readable_value = "admin" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive      = false [90m-> null[0m[0m
+      [31m-[0m[0m value          = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id   = "ws-7YKZ41eSuycvicYV" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_provider_auth["dev"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_provider_auth" {
+      [31m-[0m[0m category       = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description    = "Enable Vault integration." [90m-> null[0m[0m
+      [31m-[0m[0m hcl            = false [90m-> null[0m[0m
+      [31m-[0m[0m id             = "var-WbeWxuQtZVSFqmot" [90m-> null[0m[0m
+      [31m-[0m[0m key            = "TFC_VAULT_PROVIDER_AUTH" [90m-> null[0m[0m
+      [31m-[0m[0m readable_value = "true" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive      = false [90m-> null[0m[0m
+      [31m-[0m[0m value          = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id   = "ws-zrAVrwTyXPRGPofH" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_provider_auth["prod"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_provider_auth" {
+      [31m-[0m[0m category       = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description    = "Enable Vault integration." [90m-> null[0m[0m
+      [31m-[0m[0m hcl            = false [90m-> null[0m[0m
+      [31m-[0m[0m id             = "var-4XB2YCdBNw3buPkR" [90m-> null[0m[0m
+      [31m-[0m[0m key            = "TFC_VAULT_PROVIDER_AUTH" [90m-> null[0m[0m
+      [31m-[0m[0m readable_value = "true" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive      = false [90m-> null[0m[0m
+      [31m-[0m[0m value          = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id   = "ws-7YKZ41eSuycvicYV" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_run_role["dev"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_run_role" {
+      [31m-[0m[0m category       = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description    = "Workspace Vault role." [90m-> null[0m[0m
+      [31m-[0m[0m hcl            = false [90m-> null[0m[0m
+      [31m-[0m[0m id             = "var-RRtQQWEXDTtGPJT2" [90m-> null[0m[0m
+      [31m-[0m[0m key            = "TFC_VAULT_RUN_ROLE" [90m-> null[0m[0m
+      [31m-[0m[0m readable_value = "payment-api-tfc-dev" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive      = false [90m-> null[0m[0m
+      [31m-[0m[0m value          = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id   = "ws-zrAVrwTyXPRGPofH" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_variable.vault_run_role["prod"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_variable" "vault_run_role" {
+      [31m-[0m[0m category       = "env" [90m-> null[0m[0m
+      [31m-[0m[0m description    = "Workspace Vault role." [90m-> null[0m[0m
+      [31m-[0m[0m hcl            = false [90m-> null[0m[0m
+      [31m-[0m[0m id             = "var-7gPMousoKJQFaZzc" [90m-> null[0m[0m
+      [31m-[0m[0m key            = "TFC_VAULT_RUN_ROLE" [90m-> null[0m[0m
+      [31m-[0m[0m readable_value = "payment-api-tfc-prod" [90m-> null[0m[0m
+      [31m-[0m[0m sensitive      = false [90m-> null[0m[0m
+      [31m-[0m[0m value          = (sensitive value) [90m-> null[0m[0m
+      [31m-[0m[0m workspace_id   = "ws-7YKZ41eSuycvicYV" [90m-> null[0m[0m
+    }
+
+[1m  # module.workspace.tfe_workspace.this["dev"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_workspace" "this" {
+      [31m-[0m[0m allow_destroy_plan             = true [90m-> null[0m[0m
+      [31m-[0m[0m assessments_enabled            = false [90m-> null[0m[0m
+      [31m-[0m[0m auto_apply                     = true [90m-> null[0m[0m
+      [31m-[0m[0m auto_apply_run_trigger         = false [90m-> null[0m[0m
+      [31m-[0m[0m effective_tags                 = {} [90m-> null[0m[0m
+      [31m-[0m[0m execution_mode                 = "remote" [90m-> null[0m[0m
+      [31m-[0m[0m file_triggers_enabled          = true [90m-> null[0m[0m
+      [31m-[0m[0m force_delete                   = false [90m-> null[0m[0m
+      [31m-[0m[0m global_remote_state            = false [90m-> null[0m[0m
+      [31m-[0m[0m html_url                       = "https://app.terraform.io/app/hashicorp-kranthi/workspaces/payment-api-dev" [90m-> null[0m[0m
+      [31m-[0m[0m hyok_enabled                   = false [90m-> null[0m[0m
+      [31m-[0m[0m id                             = "ws-zrAVrwTyXPRGPofH" [90m-> null[0m[0m
+      [31m-[0m[0m inherits_project_auto_destroy  = true [90m-> null[0m[0m
+      [31m-[0m[0m name                           = "payment-api-dev" [90m-> null[0m[0m
+      [31m-[0m[0m operations                     = true [90m-> null[0m[0m
+      [31m-[0m[0m organization                   = "hashicorp-kranthi" [90m-> null[0m[0m
+      [31m-[0m[0m project_id                     = "prj-qoVeKGQdpG8ZjkUF" [90m-> null[0m[0m
+      [31m-[0m[0m queue_all_runs                 = true [90m-> null[0m[0m
+      [31m-[0m[0m remote_state_consumer_ids      = [] [90m-> null[0m[0m
+      [31m-[0m[0m resource_count                 = 0 [90m-> null[0m[0m
+      [31m-[0m[0m speculative_enabled            = true [90m-> null[0m[0m
+      [31m-[0m[0m structured_run_output_enabled  = true [90m-> null[0m[0m
+      [31m-[0m[0m tag_names                      = [
+          [31m-[0m[0m "dev",
+          [31m-[0m[0m "managed-by-landing-zone",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m tags                           = {} [90m-> null[0m[0m
+      [31m-[0m[0m terraform_version              = ">= 1.6.0" [90m-> null[0m[0m
+      [31m-[0m[0m trigger_patterns               = [] [90m-> null[0m[0m
+      [31m-[0m[0m trigger_prefixes               = [] [90m-> null[0m[0m
+        [90m# (8 unchanged attributes hidden)[0m[0m
+    }
+
+[1m  # module.workspace.tfe_workspace.this["prod"][0m will be [1m[31mdestroyed[0m
+[0m  [31m-[0m[0m resource "tfe_workspace" "this" {
+      [31m-[0m[0m allow_destroy_plan             = true [90m-> null[0m[0m
+      [31m-[0m[0m assessments_enabled            = false [90m-> null[0m[0m
+      [31m-[0m[0m auto_apply                     = true [90m-> null[0m[0m
+      [31m-[0m[0m auto_apply_run_trigger         = false [90m-> null[0m[0m
+      [31m-[0m[0m effective_tags                 = {} [90m-> null[0m[0m
+      [31m-[0m[0m execution_mode                 = "remote" [90m-> null[0m[0m
+      [31m-[0m[0m file_triggers_enabled          = true [90m-> null[0m[0m
+      [31m-[0m[0m force_delete                   = false [90m-> null[0m[0m
+      [31m-[0m[0m global_remote_state            = false [90m-> null[0m[0m
+      [31m-[0m[0m html_url                       = "https://app.terraform.io/app/hashicorp-kranthi/workspaces/payment-api-prod" [90m-> null[0m[0m
+      [31m-[0m[0m hyok_enabled                   = false [90m-> null[0m[0m
+      [31m-[0m[0m id                             = "ws-7YKZ41eSuycvicYV" [90m-> null[0m[0m
+      [31m-[0m[0m inherits_project_auto_destroy  = true [90m-> null[0m[0m
+      [31m-[0m[0m name                           = "payment-api-prod" [90m-> null[0m[0m
+      [31m-[0m[0m operations                     = true [90m-> null[0m[0m
+      [31m-[0m[0m organization                   = "hashicorp-kranthi" [90m-> null[0m[0m
+      [31m-[0m[0m project_id                     = "prj-qoVeKGQdpG8ZjkUF" [90m-> null[0m[0m
+      [31m-[0m[0m queue_all_runs                 = true [90m-> null[0m[0m
+      [31m-[0m[0m remote_state_consumer_ids      = [] [90m-> null[0m[0m
+      [31m-[0m[0m resource_count                 = 0 [90m-> null[0m[0m
+      [31m-[0m[0m speculative_enabled            = true [90m-> null[0m[0m
+      [31m-[0m[0m structured_run_output_enabled  = true [90m-> null[0m[0m
+      [31m-[0m[0m tag_names                      = [
+          [31m-[0m[0m "managed-by-landing-zone",
+          [31m-[0m[0m "prod",
+        ] [90m-> null[0m[0m
+      [31m-[0m[0m tags                           = {} [90m-> null[0m[0m
+      [31m-[0m[0m terraform_version              = ">= 1.6.0" [90m-> null[0m[0m
+      [31m-[0m[0m trigger_patterns               = [] [90m-> null[0m[0m
+      [31m-[0m[0m trigger_prefixes               = [] [90m-> null[0m[0m
+        [90m# (8 unchanged attributes hidden)[0m[0m
+    }
+
+[1mPlan:[0m 0 to add, 0 to change, 18 to destroy.
+[0m
+Changes to Outputs:
+  [31m-[0m[0m platform_type       = "hcp" [90m-> null[0m[0m
+  [31m-[0m[0m project_id          = "prj-qoVeKGQdpG8ZjkUF" [90m-> null[0m[0m
+  [31m-[0m[0m project_name        = "landing-zone-test" [90m-> null[0m[0m
+  [31m-[0m[0m tfc_hostname        = "app.terraform.io" [90m-> null[0m[0m
+  [31m-[0m[0m vault_jwt_auth_path = "jwt" [90m-> null[0m[0m
+  [31m-[0m[0m vault_namespace     = "" [90m-> null[0m[0m
+  [31m-[0m[0m vault_policy_names  = [
+      [31m-[0m[0m "payment-api-tfc-base",
+      [31m-[0m[0m "payment-api-admin",
+      [31m-[0m[0m "payment-api-admin",
+    ] [90m-> null[0m[0m
+  [31m-[0m[0m vault_role_names    = {
+      [31m-[0m[0m dev  = "payment-api-tfc-dev"
+      [31m-[0m[0m prod = "payment-api-tfc-prod"
+    } [90m-> null[0m[0m
+  [31m-[0m[0m vault_token_max_ttl = 2400 [90m-> null[0m[0m
+  [31m-[0m[0m vault_token_ttl     = 1200 [90m-> null[0m[0m
+  [31m-[0m[0m workspace_ids       = {
+      [31m-[0m[0m dev  = "ws-zrAVrwTyXPRGPofH"
+      [31m-[0m[0m prod = "ws-7YKZ41eSuycvicYV"
+    } [90m-> null[0m[0m
+  [31m-[0m[0m workspace_names     = {
+      [31m-[0m[0m dev  = "payment-api-dev"
+      [31m-[0m[0m prod = "payment-api-prod"
+    } [90m-> null[0m[0m
+[0m[1mmodule.vault_auth[0].vault_policy.custom["payment-api-admin"]: Destroying... [id=payment-api-admin][0m[0m
+[0m[1mmodule.vault_auth[0].vault_policy.tfc_base: Destroying... [id=payment-api-tfc-base][0m[0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend_role.workspace["prod"]: Destroying... [id=auth/jwt/role/payment-api-tfc-prod][0m[0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend_role.workspace["dev"]: Destroying... [id=auth/jwt/role/payment-api-tfc-dev][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_namespace["dev"]: Destroying... [id=var-y2ymC9tRM3gQ82uu][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_namespace["prod"]: Destroying... [id=var-dRCdjMPAARq1e9Di][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_provider_auth["dev"]: Destroying... [id=var-WbeWxuQtZVSFqmot][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_run_role["prod"]: Destroying... [id=var-7gPMousoKJQFaZzc][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_provider_auth["prod"]: Destroying... [id=var-4XB2YCdBNw3buPkR][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_addr["dev"]: Destroying... [id=var-J8sLj6YcYgHPgu1X][0m[0m
+[0m[1mmodule.vault_auth[0].vault_policy.custom["payment-api-admin"]: Destruction complete after 0s[0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend_role.workspace["prod"]: Destruction complete after 0s[0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend_role.workspace["dev"]: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_auth_path["prod"]: Destroying... [id=var-AFVShsZhGaaxMtDT][0m[0m
+[0m[1mmodule.vault_auth[0].vault_policy.tfc_base: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_auth_path["dev"]: Destroying... [id=var-Sb9ef3JpZ6KNaNJU][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_addr["prod"]: Destroying... [id=var-PiCKE145kWVBbEzu][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_run_role["dev"]: Destroying... [id=var-RRtQQWEXDTtGPJT2][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_provider_auth["prod"]: Destruction complete after 0s[0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend.tfc[0]: Destroying... [id=jwt][0m[0m
+[0m[1mmodule.workspace.tfe_variable.vault_namespace["prod"]: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_addr["dev"]: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_namespace["dev"]: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_run_role["prod"]: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_provider_auth["dev"]: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_addr["prod"]: Destruction complete after 1s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_auth_path["dev"]: Destruction complete after 1s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_auth_path["prod"]: Destruction complete after 1s[0m
+[0m[1mmodule.vault_auth[0].vault_jwt_auth_backend.tfc[0]: Destruction complete after 1s[0m
+[0m[1mmodule.workspace.tfe_variable.vault_run_role["dev"]: Destruction complete after 1s[0m
+[0m[1mmodule.workspace.tfe_workspace.this["dev"]: Destroying... [id=ws-zrAVrwTyXPRGPofH][0m[0m
+[0m[1mmodule.workspace.tfe_workspace.this["prod"]: Destroying... [id=ws-7YKZ41eSuycvicYV][0m[0m
+[0m[1mmodule.workspace.tfe_workspace.this["prod"]: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_workspace.this["dev"]: Destruction complete after 0s[0m
+[0m[1mmodule.workspace.tfe_project.this: Destroying... [id=prj-qoVeKGQdpG8ZjkUF][0m[0m
+[0m[1mmodule.workspace.tfe_project.this: Destruction complete after 0s[0m
+[33m╷[0m[0m
+[33m│[0m [0m[1m[33mWarning: [0m[0m[1mArgument is deprecated[0m
+[33m│[0m [0m
+[33m│[0m [0m[0m  with module.workspace.tfe_workspace.this,
+[33m│[0m [0m  on standalone-repos/terraform-tfe-workspace/main.tf line 18, in resource "tfe_workspace" "this":
+[33m│[0m [0m  18:   execution_mode                 = [4m"remote"[0m[0m
+[33m│[0m [0m
+[33m│[0m [0mUse resource tfe_workspace_settings to modify the workspace execution
+[33m│[0m [0msettings. This attribute will be removed in a future release of the
+[33m│[0m [0mprovider.
+[33m╵[0m[0m
+[0m[1m[32m
+Destroy complete! Resources: 18 destroyed.
+[0m

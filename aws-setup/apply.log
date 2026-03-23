@@ -1,0 +1,15 @@
+[0m[1mdata.aws_caller_identity.current: Reading...[0m[0m
+[0m[1mdata.aws_caller_identity.current: Read complete after 1s [id=833630885116][0m
+[0m[1maws_iam_role.app_role: Refreshing state... [id=payment-api-vault-role][0m
+[0m[1maws_iam_role_policy.app_policy: Refreshing state... [id=payment-api-vault-role:s3-access][0m
+
+[0m[1m[32mNo changes.[0m[1m Your infrastructure matches the configuration.[0m
+
+[0mTerraform has compared your real infrastructure against your configuration
+and found no differences, so no changes are needed.
+[0m[1m[32m
+Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+[0m[0m[1m[32m
+Outputs:
+
+[0mrole_arn = "arn:aws:iam::833630885116:role/payment-api-vault-role"

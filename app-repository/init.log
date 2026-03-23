@@ -1,0 +1,15 @@
+[0m[1mInitializing HCP Terraform...[0m
+[0m[1mInitializing modules...[0m
+[0m[1mInitializing provider plugins...[0m
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Reusing previous version of hashicorp/vault from the dependency lock file
+- Using previously-installed hashicorp/vault v5.8.0
+- Using previously-installed hashicorp/aws v5.100.0
+
+[0m[1m[32mHCP Terraform has been successfully initialized![0m[32m[0m
+[0m[32m
+You may now begin working with HCP Terraform. Try running "terraform plan" to
+see any changes that are required for your infrastructure.
+
+If you ever set or change modules or Terraform Settings, run "terraform init"
+again to reinitialize your working directory.[0m

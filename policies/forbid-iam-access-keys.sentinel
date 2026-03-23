@@ -1,0 +1,12 @@
+import "tfplan/v2" as tfplan
+
+# Get all AWS IAM access key resources from the plan
+aws_access_keys = filter tfplan.resource_changes as address, rc {
+    rc.type is "aws_iam_access_key" and
+    (rc.change.actions contains "create" or rc.change.actions contains "update")
+}
+
+# Rule to evaluate
+main = rule {
+    length(aws_access_keys) == 0
+}
