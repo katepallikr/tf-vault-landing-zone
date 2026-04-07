@@ -1,95 +1,68 @@
-# Terraform Landing Zone Orchestrator
+# Enterprise Terraform Landing Zone
 
-Automates app onboarding to **HCP Terraform** / **Terraform Enterprise** with optional **Vault** (HCP Vault Dedicated or Enterprise) integration. The landing zone itself is thin — it wires together standalone child modules rather than defining resources directly.
+I built this repo to automate how we onboard applications into HashiCorp Terraform Cloud (TFC) and Vault. 
+The old monolithic module got way too messy, so I broke it down into a strict tiered structure based on HashiCorp's Validated Patterns.
 
-## Architecture: The "Lego Block" Model
+### The Architecture: Tier 1 vs Tier 2
+Instead of tossing everything into one giant run, the setup is split by admin boundaries.
 
-This Landing Zone acts as a core assembler. Instead of being a Monolith, the orchestrator consumes independent child modules via Git URLs.
+```mermaid
+graph TD
+    A["🔐 Tier 1: Platform Core"] -->|Vends| B["📁 TFC Projects"]
+    A -->|Configures| C["🛡️ Global Vault JWT Trust"]
+    
+    D["👩‍💻 Tier 2: App Onboarding"] -.->|Locates via Data Sources| B
+    D -.->|Extends| C
+    
+    D -->|Provisions| E["☁️ App Workspaces"]
+    D -->|Provisions| F["🔑 App Vault Namespaces"]
+    
+    E -->|Authenticates via OIDC| F
+    F -->|Vends STS Tokens| G["⚡ AWS Operations"]
 
-*   Think of the landing zone like **a kid playing with Legos** — each module is a discrete block you snap together.
-*   "I need a project and a workspace, but I also need AWS Cloud credentials" → just click the `cloud_oidc` and `vault_aws` modules in using the configuration inputs.
-*   Each of these child modules lives in its own repository with an independent SDLC.
-
+    style A fill:#34495e,stroke:#2c3e50,color:#fff,rx:8
+    style B fill:#2980b9,stroke:#2471a3,color:#fff,rx:8
+    style C fill:#8e44ad,stroke:#7d3cb3,color:#fff,rx:8
+    style D fill:#e67e22,stroke:#d35400,color:#fff,rx:8
+    style E fill:#27ae60,stroke:#229954,color:#fff,rx:8
+    style F fill:#f39c12,stroke:#d68910,color:#fff,rx:8
+    style G fill:#c0392b,stroke:#a93226,color:#fff,rx:8
 ```
- ┌────────────────────────────────────────────────────────┐
- │              Main Orchestrator (This Repo)             │
- │                                                        │
- │  Reads Application Inputs and Coordinates Subsystems   │
- │                                                        │
- └─────────────────┬──────────────────────┬───────────────┘
-                   │                      │
-         ┌─────────▼────────┐   ┌─────────▼─────────────────┐
-         │ Terraform Cloud  │   │ Vault Integrations        │
-         │ Configuration    │   │ (Dynamic Credentials)     │
-         │                  │   │                           │
-         ├── tfe_workspace  │   ├── vault_auth (JWT OIDC)   │
-         ├── run_tasks      │   ├── vault_namespace         │
-         ├── variable_sets  │   └── vault_aws (AWS STS)     │
-         ├── notifications  │                               │
-         └── cloud_oidc     │                               │
-         └──────────────────┘   └───────────────────────────┘
+
+- **`tier-1-platform/`**: This is for the Platform Admins. It spins up the global Terraform Cloud Projects and the core Vault JWT Auth backend. You run this once per business unit or major environment.
+- **`tier-2-app-onboarding/`**: This is for Application Teams asking for infrastructure. It looks up the stuff made in Tier 1 using data sources and safely provisions their specific workspaces, Vault Sub-Namespaces, and AWS Secrets Engines. 
+
+It prevents teams from stepping on each other's toes or messing with the global OIDC trust.
+
+### Vault & Dynamic Provider Credentials (DPC)
+I ripped out all static AWS credentials. 
+This repo explicitly uses **Vault-Backed Dynamic Credentials**.
+- TFC workspaces authenticate to Vault using their native OIDC tokens.
+- Vault verifies the JWT and issues an STS token (`assumed_role`) for getting into AWS.
+
+To do this properly, I added the `vault_backed_aws_auth_type_map` variable inside `tier-2` so you can securely override whether an environment gets `assumed_role` or standard `iam_user` keys on the fly without breaking the global config.
+
+### Local Guardrails 
+I got tired of syntax errors failing halfway through TFC runs, so I ported the strict local guardrails from IBM's enterprise repos.
+
+If you are developing here, you need to run:
+```bash
+brew install pre-commit tflint trivy terraform-docs
+pre-commit install
 ```
 
-## Features
+Once you do that, every time you try to commit code, it will automatically:
+- Run `terraform fmt` across everything
+- Run `terraform-docs` to rebuild the sub-READMEs so I don't have to write them manually
+- Lint your code specifically against AWS and standard naming rules (check `.tflint.hcl`)
+- Run a Trivy static analysis scan to catch stuff before it hits the provider
 
-- **Modular** — Workspace, Vault, and Day 2 ops are separate modules with their own lifecycle
-- **Vault integration** — JWT-based workload identity federation with no static credentials stored in Terraform
-- **Day 2 ops** — Checkov/Infracost run tasks, Slack alerts, and variable set attachments
-- **Cloud OIDC** — AWS/GCP/Azure workload identity without needing Vault
-
-## Module Ecosystem Structure
-
-The orchestrator pulls these child modules from your registry or Git:
-
+### Modules
+All reusable components are isolated inside `standalone-repos/`. The tiers just invoke them like normal modules.
 - `terraform-tfe-workspace`
 - `terraform-vault-auth`
 - `terraform-vault-namespace`
-- `terraform-tfc-cloud-oidc`
-- `terraform-tfc-run-tasks`
-- `terraform-tfc-variable-sets`
-- `terraform-tfc-notifications`
+- `terraform-vault-aws`
 
-`terraform-vault-aws` is included for apps that need their own AWS secrets engine mount.
-
-## Quick Start
-
-```hcl
-module "app_landing_zone" {
-  source  = "git::https://github.com/your-org/terraform-tfe-landing-zone.git?ref=v2.0.0"
-
-  organization_name = "your-org"
-  project_name      = "my-app-project"
-  application_name  = "my-app"
-  environments      = ["dev", "prod"]
-
-  enable_vault_integration = true
-  vault_url                = "https://vault.example.com:8200"
-  vault_namespace          = "admin"
-}
-```
-
-## Security Model
-
-This module implements HashiCorp's recommended security patterns:
-
-1. **No static credentials** — workspaces auth to Vault via short-lived JWTs verified against the TFC OIDC endpoint
-2. **Bound claims** — each role is locked to a specific org + project + workspace via the `sub` claim
-3. **Input validation** — lifecycle preconditions guard team lookups and org access
-
-## Requirements
-
-| Name | Version |
-|------|---------|
-| terraform | >= 1.6.0 |
-| tfe | >= 0.58.0, < 1.0.0 |
-| vault | >= 4.0.0, < 6.0.0 |
-
-## Prerequisites
-
-- HCP Terraform or Terraform Enterprise organization
-- API token with permission to create projects, workspaces, and variable sets
-- Vault cluster with permission to manage JWT auth backends, policies, and namespaces
-
-## License
-
-[MPL-2.0](./LICENSE)
+### Live Testing
+If you want to test the entire AWS OIDC -> Vault -> TFC flow without breaking production state, run the `auto_live_demo.sh` script. It spins up a temporary sandbox environment, provisions an app workspace, and applies a dummy AWS S3 bucket to verify the Vault STS tokens are actually working.
