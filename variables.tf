@@ -243,6 +243,24 @@ variable "enable_plan_apply_separation" {
   default     = false
 }
 
+variable "enable_vault_backed_aws_auth" {
+  description = "Enable native AWS Dynamic Provider Credentials via Vault (TFC_VAULT_BACKED_AWS_AUTH). Can be used even if engine is created externally."
+  type        = bool
+  default     = false
+}
+
+variable "create_vault_aws_engine" {
+  description = "Whether to provision the AWS secrets engine in the Vault namespace. Set to false if the engine is already present."
+  type        = bool
+  default     = false
+}
+
+variable "vault_aws_auth_mount" {
+  description = "Mount path for Vault AWS secrets engine. Used by DPC."
+  type        = string
+  default     = "aws"
+}
+
 # Sentinel Policy Sets (Optional)
 
 variable "enable_sentinel_policies" {

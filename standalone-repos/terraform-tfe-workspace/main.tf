@@ -116,6 +116,52 @@ resource "tfe_variable" "vault_apply_role" {
   description  = "Vault role for apply."
 }
 
+# Native TFC Vault-backed AWS Dynamic Provider Credentials
+resource "tfe_variable" "vault_backed_aws_auth" {
+  for_each     = var.enable_vault_integration && var.enable_vault_backed_aws_auth ? var.workspace_map : {}
+  workspace_id = tfe_workspace.this[each.key].id
+  key          = "TFC_VAULT_BACKED_AWS_AUTH"
+  value        = "true"
+  category     = "env"
+  description  = "Enable native AWS Dynamic Provider Credentials via Vault."
+}
+
+resource "tfe_variable" "vault_backed_aws_mount_path" {
+  for_each     = var.enable_vault_integration && var.enable_vault_backed_aws_auth && var.vault_aws_auth_mount != "" ? var.workspace_map : {}
+  workspace_id = tfe_workspace.this[each.key].id
+  key          = "TFC_VAULT_BACKED_AWS_MOUNT_PATH"
+  value        = var.vault_aws_auth_mount
+  category     = "env"
+  description  = "Vault AWS secrets engine mount path."
+}
+
+resource "tfe_variable" "vault_backed_aws_run_role" {
+  for_each     = var.enable_vault_integration && var.enable_vault_backed_aws_auth && !var.enable_plan_apply_separation ? var.workspace_map : {}
+  workspace_id = tfe_workspace.this[each.key].id
+  key          = "TFC_VAULT_BACKED_AWS_RUN_VAULT_ROLE"
+  value        = var.vault_role_map[each.key].role_name
+  category     = "env"
+  description  = "Vault role for AWS DPC."
+}
+
+resource "tfe_variable" "vault_backed_aws_plan_role" {
+  for_each     = var.enable_vault_integration && var.enable_vault_backed_aws_auth && var.enable_plan_apply_separation ? var.workspace_map : {}
+  workspace_id = tfe_workspace.this[each.key].id
+  key          = "TFC_VAULT_BACKED_AWS_PLAN_VAULT_ROLE"
+  value        = var.vault_role_map[each.key].plan_role_name
+  category     = "env"
+  description  = "Vault plan role for AWS DPC."
+}
+
+resource "tfe_variable" "vault_backed_aws_apply_role" {
+  for_each     = var.enable_vault_integration && var.enable_vault_backed_aws_auth && var.enable_plan_apply_separation ? var.workspace_map : {}
+  workspace_id = tfe_workspace.this[each.key].id
+  key          = "TFC_VAULT_BACKED_AWS_APPLY_VAULT_ROLE"
+  value        = var.vault_role_map[each.key].role_name
+  category     = "env"
+  description  = "Vault apply role for AWS DPC."
+}
+
 resource "tfe_variable" "additional" {
   for_each = {
     for pair in setproduct(keys(var.workspace_map), keys(var.additional_variables)) :

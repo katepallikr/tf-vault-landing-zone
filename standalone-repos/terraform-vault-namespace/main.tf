@@ -25,3 +25,11 @@ resource "vault_mount" "kv" {
     version = "2"
   }
 }
+
+resource "vault_aws_secret_backend" "aws" {
+  count = var.enable_aws_engine ? 1 : 0
+
+  namespace   = vault_namespace.this.path_fq
+  path        = var.aws_mount_path
+  description = "AWS Secrets engine for ${var.application_name}"
+}

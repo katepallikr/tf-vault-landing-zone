@@ -129,3 +129,15 @@ variable "sentinel_policy_set_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "enable_vault_backed_aws_auth" {
+  description = "Enable native AWS Dynamic Provider Credentials via Vault."
+  type        = bool
+  default     = false
+}
+
+variable "vault_aws_auth_mount" {
+  description = "Vault AWS secrets engine mount path."
+  type        = string
+  default     = "aws"
+}

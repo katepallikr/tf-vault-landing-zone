@@ -39,9 +39,13 @@ module "workspace" {
   vault_role_map               = local.vault_role_map
   enable_plan_apply_separation = var.enable_plan_apply_separation
 
+  enable_vault_backed_aws_auth = var.enable_vault_backed_aws_auth
+  vault_aws_auth_mount         = var.vault_aws_auth_mount
+
   run_trigger_source_workspace_ids = var.run_trigger_source_workspace_ids
   sentinel_policy_set_ids          = var.enable_sentinel_policies ? var.sentinel_policy_set_ids : []
 }
+
 
 # --- Vault JWT Auth Backend and Roles ---
 
@@ -77,12 +81,14 @@ module "vault_namespace" {
   source = "./standalone-repos/terraform-vault-namespace"
   count  = var.enable_vault_namespace ? 1 : 0
 
-  namespace_path   = local.vault_app_namespace_path
-  parent_namespace = local.vault_root_namespace
-  enable_kv_engine = var.enable_kv_secrets_engine
-  kv_mount_path    = var.kv_secrets_path
-  application_name = var.application_name
-  tags             = var.tags
+  namespace_path    = local.vault_app_namespace_path
+  parent_namespace  = local.vault_root_namespace
+  enable_kv_engine  = var.enable_kv_secrets_engine
+  kv_mount_path     = var.kv_secrets_path
+  enable_aws_engine = var.create_vault_aws_engine
+  aws_mount_path    = var.vault_aws_auth_mount
+  application_name  = var.application_name
+  tags              = var.tags
 }
 
 # --- Day 2 Admin Operations (Optional) ---

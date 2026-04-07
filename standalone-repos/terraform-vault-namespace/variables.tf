@@ -31,3 +31,15 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+
+variable "enable_aws_engine" {
+  description = "Mount AWS secrets engine in the namespace."
+  type        = bool
+  default     = false
+}
+
+variable "aws_mount_path" {
+  description = "AWS secrets engine mount path."
+  type        = string
+  default     = "aws"
+}
