@@ -1,14 +1,24 @@
-# Provisions TFC/TFE project, workspaces, and injects Vault variables.
 resource "tfe_project" "this" {
+  count        = var.create_project ? 1 : 0
   organization = var.organization_name
   name         = var.project_name
+}
+
+data "tfe_project" "this" {
+  count        = var.create_project ? 0 : 1
+  organization = var.organization_name
+  name         = var.project_name
+}
+
+locals {
+  project_id = var.create_project ? tfe_project.this[0].id : data.tfe_project.this[0].id
 }
 
 resource "tfe_workspace" "this" {
   for_each = var.workspace_map
 
   organization      = var.organization_name
-  project_id        = tfe_project.this.id
+  project_id        = local.project_id
   name              = each.value.workspace_name
   auto_apply        = var.auto_apply
   terraform_version = var.terraform_version
@@ -45,7 +55,7 @@ data "tfe_team" "this" {
 
 resource "tfe_team_project_access" "this" {
   for_each   = var.team_access
-  project_id = tfe_project.this.id
+  project_id = local.project_id
   team_id    = data.tfe_team.this[each.key].id
   access     = each.value.access
 }
@@ -135,6 +145,15 @@ resource "tfe_variable" "vault_backed_aws_mount_path" {
   description  = "Vault AWS secrets engine mount path."
 }
 
+resource "tfe_variable" "vault_backed_aws_auth_type" {
+  for_each     = var.enable_vault_integration && var.enable_vault_backed_aws_auth ? var.workspace_map : {}
+  workspace_id = tfe_workspace.this[each.key].id
+  key          = "TFC_VAULT_BACKED_AWS_AUTH_TYPE"
+  value        = lookup(var.vault_backed_aws_auth_type_map, each.key, var.vault_backed_aws_auth_type)
+  category     = "env"
+  description  = "Vault credential type (e.g. assumed_role)."
+}
+
 resource "tfe_variable" "vault_backed_aws_run_role" {
   for_each     = var.enable_vault_integration && var.enable_vault_backed_aws_auth && !var.enable_plan_apply_separation ? var.workspace_map : {}
   workspace_id = tfe_workspace.this[each.key].id
@@ -189,7 +208,7 @@ resource "tfe_run_trigger" "this" {
 
 resource "tfe_project_policy_set" "this" {
   for_each      = toset(var.sentinel_policy_set_ids)
-  project_id    = tfe_project.this.id
+  project_id    = local.project_id
   policy_set_id = each.value
 }
 

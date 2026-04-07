@@ -1,26 +1,60 @@
+# Pre-commit hooks for Terraform code quality
+#
+# Install: pre-commit install
+# Run manually: pre-commit run --all-files
+# Update hooks: pre-commit autoupdate
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
-    hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-added-large-files
-      - id: detect-private-key
-
-  - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v3.6.0
-    hooks:
-      - id: conventional-pre-commit
-        stages: [commit-msg]
-
+  # Terraform formatting and validation
   - repo: https://github.com/antonbabenko/pre-commit-terraform
-    rev: v1.96.0
+    rev: v1.103.0
     hooks:
+      # Format Terraform files
       - id: terraform_fmt
+        name: Terraform fmt
+        description: Rewrites Terraform files to canonical format
+
+      # Validate Terraform configuration
       - id: terraform_validate
-        args: ["--hook-config=--retry-once-with-cleanup=true"]
-      - id: terraform_tflint
-        args: ["--args=--config=__GIT_WORKING_DIR__/.tflint.hcl"]
+        name: Terraform validate
+        description: Validates Terraform configuration files
+
+      # Generate documentation
       - id: terraform_docs
-        args: ["--args=--config=.terraform-docs.yml"]
+        name: Terraform docs
+        description: Updates README.md with terraform-docs
+        args:
+          - --hook-config=--path-to-file=README.md
+          - --hook-config=--add-to-existing-file=true
+          - --hook-config=--create-file-if-not-exist=true
+
+      # Lint with tflint
+      - id: terraform_tflint
+        name: Terraform tflint
+        description: Lints Terraform files with tflint
+        args:
+          - --args=--config=__GIT_WORKING_DIR__/.tflint.hcl
+
+      # Security scanning with trivy
+      - id: terraform_trivy
+        args:
+          - --args=--format=json
+          - --args=--skip-dirs="**/.devcontainer"
+          - --args=--skip-dirs="**/legacy-monolith"
+          - --args=--tf-exclude-downloaded-modules=true
+          - --args=--severity=CRITICAL,HIGH,MEDIUM
+
+  # General file checks
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: end-of-file-fixer
+        name: Fix end of files
+      - id: check-yaml
+        name: Check YAML syntax
+      - id: check-added-large-files
+        name: Check for large files
+        args: ['--maxkb=500']
+      - id: check-merge-conflict
+        name: Check for merge conflicts
+      - id: detect-private-key
+        name: Detect private keys

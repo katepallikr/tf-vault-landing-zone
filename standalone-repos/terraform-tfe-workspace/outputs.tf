@@ -1,11 +1,11 @@
 output "project_id" {
   description = "Project ID."
-  value       = tfe_project.this.id
+  value       = local.project_id
 }
 
 output "project_name" {
   description = "Project name."
-  value       = tfe_project.this.name
+  value       = var.create_project ? tfe_project.this[0].name : data.tfe_project.this[0].name
 }
 
 output "workspace_ids" {

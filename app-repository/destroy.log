@@ -5,228 +5,25 @@ will stop streaming the logs, but will not stop the apply running remotely.[0m
 Preparing the remote apply...
 [0m
 [0m[33mTo view this run in a browser, visit:[0m
-[0m[33mhttps://app.terraform.io/app/hashicorp-kranthi/payment-api-dev/runs/run-cEssMQEW7sfSDzvg[0m
+[0m[33mhttps://app.terraform.io/app/hashicorp-kranthi/payment-api-dev/runs/run-C9CBbv9RtZUGyHox[0m
 [0m
 Waiting for the plan to start...
 
-Terraform v1.14.7
+Terraform v1.14.8
 on linux_amd64
 Initializing plugins and modules...
-[1mmodule.vault_aws_auth.vault_aws_secret_backend.aws: Refreshing state... [id=aws][0m[0m
-[1mmodule.vault_aws_auth.vault_policy.tfc_aws_secrets_reader[0]: Refreshing state... [id=payment-api-aws-secrets-reader][0m[0m
-[1mmodule.vault_aws_auth.vault_aws_secret_backend_role.assumed_roles["app-admin"]: Refreshing state... [id=aws/roles/app-admin][0m[0m
-[1mdata.vault_aws_access_credentials.creds: Refreshing...[0m[0m
-[1mdata.vault_aws_access_credentials.creds: Refresh complete after 0s [id=aws/sts/app-admin/3cU8WFSz1uKmdbrocCPdqO9m.xBMJP][0m[0m
-[1maws_s3_bucket.app_storage: Refreshing state... [id=payment-api-data-20260316015715042500000001][0m[0m
-[33m╷[0m[0m
-[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
-[33m│[0m [0m
-[33m│[0m [0m[0mThe root module does not declare a variable named "template_org" but a
-[33m│[0m [0mvalue was found in file
-[33m│[0m [0m"/home/tfc-agent/.tfc-agent/component/terraform/runs/run-cEssMQEW7sfSDzvg/terraform.tfvars".
-[33m│[0m [0mIf you meant to use this value, add a "variable" block to the
-[33m│[0m [0mconfiguration.
-[33m│[0m [0m
-[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
-[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
-[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
-[33m╵[0m[0m
-[33m╷[0m[0m
-[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
-[33m│[0m [0m
-[33m│[0m [0m[0mThe root module does not declare a variable named "destination_org" but a
-[33m│[0m [0mvalue was found in file
-[33m│[0m [0m"/home/tfc-agent/.tfc-agent/component/terraform/runs/run-cEssMQEW7sfSDzvg/terraform.tfvars".
-[33m│[0m [0mIf you meant to use this value, add a "variable" block to the
-[33m│[0m [0mconfiguration.
-[33m│[0m [0m
-[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
-[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
-[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
-[33m╵[0m[0m
-[33m╷[0m[0m
-[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
-[33m│[0m [0m
-[33m│[0m [0m[0mIn addition to the other similar warnings shown, 3 other variable(s)
-[33m│[0m [0mdefined without being declared.
-[33m╵[0m[0m
-
-Terraform used the selected providers to generate the following execution
-plan. Resource actions are indicated with the following symbols:
-  [31m-[0m destroy[0m
-
-Terraform will perform the following actions:
-
-[1m  # aws_s3_bucket.app_storage[0m will be [1m[31mdestroyed[0m
-[0m  [31m-[0m[0m resource "aws_s3_bucket" "app_storage" {
-      [31m-[0m[0m arn                         = "arn:aws:s3:::payment-api-data-20260316015715042500000001" [90m-> null[0m[0m
-      [31m-[0m[0m bucket                      = "payment-api-data-20260316015715042500000001" [90m-> null[0m[0m
-      [31m-[0m[0m bucket_domain_name          = "payment-api-data-20260316015715042500000001.s3.amazonaws.com" [90m-> null[0m[0m
-      [31m-[0m[0m bucket_prefix               = "payment-api-data-" [90m-> null[0m[0m
-      [31m-[0m[0m bucket_regional_domain_name = "payment-api-data-20260316015715042500000001.s3.us-east-1.amazonaws.com" [90m-> null[0m[0m
-      [31m-[0m[0m force_destroy               = false [90m-> null[0m[0m
-      [31m-[0m[0m hosted_zone_id              = "Z3AQBSTGFYJSTF" [90m-> null[0m[0m
-      [31m-[0m[0m id                          = "payment-api-data-20260316015715042500000001" [90m-> null[0m[0m
-      [31m-[0m[0m object_lock_enabled         = false [90m-> null[0m[0m
-      [31m-[0m[0m region                      = "us-east-1" [90m-> null[0m[0m
-      [31m-[0m[0m request_payer               = "BucketOwner" [90m-> null[0m[0m
-      [31m-[0m[0m tags                        = {
-          [31m-[0m[0m "Environment" = "payment-api-dev"
-          [31m-[0m[0m "ManagedBy"   = "Vault-OIDC-Injected-Terraform"
-        } [90m-> null[0m[0m
-      [31m-[0m[0m tags_all                    = {
-          [31m-[0m[0m "Environment" = "payment-api-dev"
-          [31m-[0m[0m "ManagedBy"   = "Vault-OIDC-Injected-Terraform"
-        } [90m-> null[0m[0m
-        [90m# (2 unchanged attributes hidden)[0m[0m
-
-      [31m-[0m[0m grant {
-          [31m-[0m[0m id          = "3691c35b88807e6ccb586fada91f34664f9459abf42c59309fe4ba8ca2b79a0c" [90m-> null[0m[0m
-          [31m-[0m[0m permissions = [
-              [31m-[0m[0m "FULL_CONTROL",
-            ] [90m-> null[0m[0m
-          [31m-[0m[0m type        = "CanonicalUser" [90m-> null[0m[0m
-            [90m# (1 unchanged attribute hidden)[0m[0m
-        }
-
-      [31m-[0m[0m server_side_encryption_configuration {
-          [31m-[0m[0m rule {
-              [31m-[0m[0m bucket_key_enabled = false [90m-> null[0m[0m
-
-              [31m-[0m[0m apply_server_side_encryption_by_default {
-                  [31m-[0m[0m sse_algorithm     = "AES256" [90m-> null[0m[0m
-                    [90m# (1 unchanged attribute hidden)[0m[0m
-                }
-            }
-        }
-
-      [31m-[0m[0m versioning {
-          [31m-[0m[0m enabled    = false [90m-> null[0m[0m
-          [31m-[0m[0m mfa_delete = false [90m-> null[0m[0m
-        }
-    }
-
-[1m  # module.vault_aws_auth.vault_aws_secret_backend.aws[0m will be [1m[31mdestroyed[0m
-[0m  [31m-[0m[0m resource "vault_aws_secret_backend" "aws" {
-      [31m-[0m[0m access_key                   = (sensitive value) [90m-> null[0m[0m
-      [31m-[0m[0m accessor                     = "aws_611a64f5" [90m-> null[0m[0m
-      [31m-[0m[0m allowed_managed_keys         = [] [90m-> null[0m[0m
-      [31m-[0m[0m allowed_response_headers     = [] [90m-> null[0m[0m
-      [31m-[0m[0m audit_non_hmac_request_keys  = [] [90m-> null[0m[0m
-      [31m-[0m[0m audit_non_hmac_response_keys = [] [90m-> null[0m[0m
-      [31m-[0m[0m default_lease_ttl_seconds    = 3600 [90m-> null[0m[0m
-      [31m-[0m[0m delegated_auth_accessors     = [] [90m-> null[0m[0m
-      [31m-[0m[0m description                  = "AWS Secrets Engine for payment-api" [90m-> null[0m[0m
-      [31m-[0m[0m disable_automated_rotation   = false [90m-> null[0m[0m
-      [31m-[0m[0m disable_remount              = false [90m-> null[0m[0m
-      [31m-[0m[0m external_entropy_access      = false [90m-> null[0m[0m
-      [31m-[0m[0m force_no_cache               = false [90m-> null[0m[0m
-      [31m-[0m[0m id                           = "aws" [90m-> null[0m[0m
-      [31m-[0m[0m identity_token_ttl           = 0 [90m-> null[0m[0m
-      [31m-[0m[0m local                        = false [90m-> null[0m[0m
-      [31m-[0m[0m max_lease_ttl_seconds        = 14400 [90m-> null[0m[0m
-      [31m-[0m[0m max_retries                  = -1 [90m-> null[0m[0m
-      [31m-[0m[0m options                      = {} [90m-> null[0m[0m
-      [31m-[0m[0m passthrough_request_headers  = [] [90m-> null[0m[0m
-      [31m-[0m[0m path                         = "aws" [90m-> null[0m[0m
-      [31m-[0m[0m region                       = "us-east-1" [90m-> null[0m[0m
-      [31m-[0m[0m rotation_period              = 0 [90m-> null[0m[0m
-      [31m-[0m[0m rotation_window              = 0 [90m-> null[0m[0m
-      [31m-[0m[0m seal_wrap                    = false [90m-> null[0m[0m
-      [31m-[0m[0m secret_key                   = (sensitive value) [90m-> null[0m[0m
-      [31m-[0m[0m sts_fallback_endpoints       = [] [90m-> null[0m[0m
-      [31m-[0m[0m sts_fallback_regions         = [] [90m-> null[0m[0m
-      [31m-[0m[0m username_template            = "{{ if (eq .Type \"STS\") }}{{ printf \"vault-%s-%s\"  (unix_time) (random 20) | truncate 32 }}{{ else }}{{ printf \"vault-%s-%s-%s\" (printf \"%s-%s\" (.DisplayName) (.PolicyName) | truncate 42) (unix_time) (random 20) | truncate 64 }}{{ end }}" [90m-> null[0m[0m
-        [90m# (8 unchanged attributes hidden)[0m[0m
-    }
-
-[1m  # module.vault_aws_auth.vault_aws_secret_backend_role.assumed_roles["app-admin"][0m will be [1m[31mdestroyed[0m
-[0m  [31m-[0m[0m resource "vault_aws_secret_backend_role" "assumed_roles" {
-      [31m-[0m[0m backend                  = "aws" [90m-> null[0m[0m
-      [31m-[0m[0m credential_type          = "assumed_role" [90m-> null[0m[0m
-      [31m-[0m[0m default_sts_ttl          = 3600 [90m-> null[0m[0m
-      [31m-[0m[0m iam_groups               = [] [90m-> null[0m[0m
-      [31m-[0m[0m iam_tags                 = {} [90m-> null[0m[0m
-      [31m-[0m[0m id                       = "aws/roles/app-admin" [90m-> null[0m[0m
-      [31m-[0m[0m max_sts_ttl              = 14400 [90m-> null[0m[0m
-      [31m-[0m[0m name                     = "app-admin" [90m-> null[0m[0m
-      [31m-[0m[0m policy_arns              = [] [90m-> null[0m[0m
-      [31m-[0m[0m role_arns                = [
-          [31m-[0m[0m "arn:aws:iam::833630885116:role/payment-api-vault-role",
-        ] [90m-> null[0m[0m
-      [31m-[0m[0m session_tags             = {} [90m-> null[0m[0m
-        [90m# (5 unchanged attributes hidden)[0m[0m
-    }
-
-[1m  # module.vault_aws_auth.vault_policy.tfc_aws_secrets_reader[0][0m will be [1m[31mdestroyed[0m
-[0m  [31m-[0m[0m resource "vault_policy" "tfc_aws_secrets_reader" {
-      [31m-[0m[0m id     = "payment-api-aws-secrets-reader" [90m-> null[0m[0m
-      [31m-[0m[0m name   = "payment-api-aws-secrets-reader" [90m-> null[0m[0m
-      [31m-[0m[0m policy = <<-EOT
-            # Allow reading creds
-            
-            path "aws/creds/app-admin" {
-              capabilities = ["read"]
-            }
-                
-            # For STS AssumeRole tokens
-            path "aws/sts/app-admin" {
-              capabilities = ["read"]
-            }
-        EOT [90m-> null[0m[0m
-    }
-
-[1mPlan:[0m 0 to add, 0 to change, 4 to destroy.
-[0m
-------------------------------------------------------------------------
-
-[1mCost Estimation:
-[0m
-Resources: 0 of 0 estimated
-           $0.0/mo +$0.0
-
-------------------------------------------------------------------------
-
-[1maws_s3_bucket.app_storage: Destroying... [id=payment-api-data-20260316015715042500000001][0m[0m
-[1maws_s3_bucket.app_storage: Destruction complete after 0s[0m[0m
-[1mmodule.vault_aws_auth.vault_policy.tfc_aws_secrets_reader[0]: Destroying... [id=payment-api-aws-secrets-reader][0m[0m
-[1mmodule.vault_aws_auth.vault_aws_secret_backend_role.assumed_roles["app-admin"]: Destroying... [id=aws/roles/app-admin][0m[0m
-[1mmodule.vault_aws_auth.vault_aws_secret_backend_role.assumed_roles["app-admin"]: Destruction complete after 0s[0m[0m
-[1mmodule.vault_aws_auth.vault_policy.tfc_aws_secrets_reader[0]: Destruction complete after 0s[0m[0m
-[1mmodule.vault_aws_auth.vault_aws_secret_backend.aws: Destroying... [id=aws][0m[0m
-[1mmodule.vault_aws_auth.vault_aws_secret_backend.aws: Destruction complete after 0s[0m[0m
-[33m╷[0m[0m
-[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
-[33m│[0m [0m
-[33m│[0m [0m[0mThe root module does not declare a variable named "template_repo" but a
-[33m│[0m [0mvalue was found in file
-[33m│[0m [0m"/home/tfc-agent/.tfc-agent/component/terraform/runs/run-cEssMQEW7sfSDzvg/terraform.tfvars".
-[33m│[0m [0mIf you meant to use this value, add a "variable" block to the
-[33m│[0m [0mconfiguration.
-[33m│[0m [0m
-[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
-[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
-[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
-[33m╵[0m[0m
-[33m╷[0m[0m
-[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValue for undeclared variable[0m
-[33m│[0m [0m
-[33m│[0m [0m[0mThe root module does not declare a variable named "gh_token" but a value
-[33m│[0m [0mwas found in file
-[33m│[0m [0m"/home/tfc-agent/.tfc-agent/component/terraform/runs/run-cEssMQEW7sfSDzvg/terraform.tfvars".
-[33m│[0m [0mIf you meant to use this value, add a "variable" block to the
-[33m│[0m [0mconfiguration.
-[33m│[0m [0m
-[33m│[0m [0mTo silence these warnings, use TF_VAR_... environment variables to provide
-[33m│[0m [0mcertain "global" settings to all configurations in your organization. To
-[33m│[0m [0mreduce the verbosity of these warnings, use the -compact-warnings option.
-[33m╵[0m[0m
-[33m╷[0m[0m
-[33m│[0m [0m[1m[33mWarning: [0m[0m[1mValues for undeclared variables[0m
-[33m│[0m [0m
-[33m│[0m [0m[0mIn addition to the other similar warnings shown, 3 other variable(s)
-[33m│[0m [0mdefined without being declared.
-[33m╵[0m[0m
-
-[1m[32mApply complete! Resources: 0 added, 0 changed, 4 destroyed.[0m[0m
-
+[0m[1mInitializing HCP Terraform...[0m
+[0m[1mInitializing modules...[0m
+- vault_aws_auth in
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnreadable module directory[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mUnable to evaluate directory symlink: lstat ../standalone-repos: no such
+[31m│[0m [0mfile or directory
+[31m╵[0m[0m
+[31m╷[0m[0m
+[31m│[0m [0m[1m[31mError: [0m[0m[1mUnreadable module directory[0m
+[31m│[0m [0m
+[31m│[0m [0m[0mThe directory  could not be read for module "vault_aws_auth" at main.tf:5.
+[31m╵[0m[0m
+Operation failed: failed running terraform init (exit 1)

@@ -8,6 +8,12 @@ variable "project_name" {
   type        = string
 }
 
+variable "create_project" {
+  description = "Create the TFC project or look it up."
+  type        = bool
+  default     = true
+}
+
 variable "application_name" {
   description = "App name prefix."
   type        = string
@@ -140,4 +146,16 @@ variable "vault_aws_auth_mount" {
   description = "Vault AWS secrets engine mount path."
   type        = string
   default     = "aws"
+}
+
+variable "vault_backed_aws_auth_type" {
+  description = "The default credential type Vault vends for AWS (iam_user, assumed_role, federation_token)."
+  type        = string
+  default     = "assumed_role"
+}
+
+variable "vault_backed_aws_auth_type_map" {
+  description = "Optional overrides for AWS auth type per environment key."
+  type        = map(string)
+  default     = {}
 }

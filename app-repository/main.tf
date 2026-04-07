@@ -3,7 +3,7 @@
 
 # --- Mount Application-specific AWS Secrets Engine ---
 module "vault_aws_auth" {
-  source = "../standalone-repos/terraform-vault-aws"
+  source = "./modules/terraform-vault-aws"
 
   vault_namespace  = "" # HCP Vault Dedicated root
   application_name = "payment-api"
