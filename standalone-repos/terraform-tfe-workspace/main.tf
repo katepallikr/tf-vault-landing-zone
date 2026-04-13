@@ -78,7 +78,26 @@ resource "tfe_variable" "vault_addr" {
   value        = var.vault_url
   category     = "env"
   sensitive    = true
-  description  = "Vault URL."
+  description  = "Vault URL (for TFC native agent)."
+}
+
+resource "tfe_variable" "vault_addr_standard" {
+  for_each     = var.enable_vault_integration ? var.workspace_map : {}
+  workspace_id = tfe_workspace.this[each.key].id
+  key          = "VAULT_ADDR"
+  value        = var.vault_url
+  category     = "env"
+  sensitive    = true
+  description  = "Vault URL (for provider)."
+}
+
+resource "tfe_variable" "vault_namespace_standard" {
+  for_each     = var.enable_vault_integration && var.vault_namespace != "" ? var.workspace_map : {}
+  workspace_id = tfe_workspace.this[each.key].id
+  key          = "VAULT_NAMESPACE"
+  value        = var.vault_namespace
+  category     = "env"
+  description  = "Vault namespace (for provider)."
 }
 
 resource "tfe_variable" "vault_namespace" {
@@ -87,7 +106,7 @@ resource "tfe_variable" "vault_namespace" {
   key          = "TFC_VAULT_NAMESPACE"
   value        = var.vault_namespace
   category     = "env"
-  description  = "Vault namespace."
+  description  = "Vault namespace (for TFC native agent)."
 }
 
 resource "tfe_variable" "vault_auth_path" {

@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= 1.6.0"
   required_providers {
     tfe = {
       source  = "hashicorp/tfe"
@@ -11,7 +12,7 @@ terraform {
   }
 }
 
-# 1. Core Project Setup
+# core project setup
 module "core_project" {
   source = "../standalone-repos/terraform-tfe-workspace"
 
@@ -24,7 +25,7 @@ module "core_project" {
   workspace_map    = {}
 }
 
-# 2. Variable Sets
+# optional variable sets
 module "variable_sets" {
   source = "../standalone-repos/terraform-tfc-variable-sets"
   count  = length(var.variable_set_ids) > 0 ? 1 : 0
@@ -33,7 +34,7 @@ module "variable_sets" {
   variable_set_ids = var.variable_set_ids
 }
 
-# 3. Vault OIDC Backend Initialization
+# oidc backend config
 module "vault_auth_backend" {
   source = "../standalone-repos/terraform-vault-auth"
   count  = var.enable_vault_integration ? 1 : 0

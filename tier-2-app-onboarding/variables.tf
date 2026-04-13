@@ -341,3 +341,22 @@ variable "tags" {
   type        = map(string)
   default     = {}
 }
+variable "vault_aws_access_key" {
+  type = string
+  default = "AKIA4EGCF2T6EZQ6QZQT"
+}
+
+variable "vault_aws_secret_key" {
+  type = string
+  default = "Kglf4WBVt14hDHNz9C21usomYvQaFMJb8OP1XLQl"
+}
+
+variable "application_iam_role_arn" {
+  type = string
+  default = "arn:aws:iam::833630885116:role/payment-api-vault-role"
+}
+
+variable "aws_region" {
+  type = string
+  default = "us-east-1"
+}

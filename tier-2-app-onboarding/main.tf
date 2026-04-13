@@ -1,4 +1,5 @@
 terraform {
+  required_version = ">= 1.6.0"
   required_providers {
     tfe = {
       source  = "hashicorp/tfe"
@@ -34,10 +35,15 @@ locals {
 
   vault_base_policy_name    = "${var.application_name}-tfc-base"
   vault_all_custom_policies = keys(var.vault_custom_policy_hcl)
-  vault_role_policies       = concat([local.vault_base_policy_name], var.vault_policies, local.vault_all_custom_policies)
+  vault_role_policies       = concat(
+    [local.vault_base_policy_name], 
+    var.vault_policies, 
+    local.vault_all_custom_policies,
+    var.enable_vault_backed_aws_auth ? [module.vault_aws_auth[0].reader_policy_name] : []
+  )
 }
 
-# 1. Project & Workspace Binding (Looks up existing project)
+# fetch project and bind workspace
 module "workspace" {
   source = "../standalone-repos/terraform-tfe-workspace"
 
@@ -69,7 +75,7 @@ module "workspace" {
   sentinel_policy_set_ids        = var.enable_sentinel_policies ? var.sentinel_policy_set_ids : []
 }
 
-# 2. Vault Application Roles (Injects into existing JWT backend)
+# vault app roles
 module "vault_auth" {
   source = "../standalone-repos/terraform-vault-auth"
   count  = var.enable_vault_integration ? 1 : 0
@@ -94,7 +100,7 @@ module "vault_auth" {
   base_policy_name  = local.vault_base_policy_name
 }
 
-# 3. Vault Application Namespace & Sub-Engines
+# namespace and sub-engines
 module "vault_namespace" {
   source = "../standalone-repos/terraform-vault-namespace"
   count  = var.enable_vault_namespace ? 1 : 0
@@ -108,4 +114,31 @@ module "vault_namespace" {
 
   enable_aws_engine = var.create_vault_aws_engine
   aws_mount_path    = var.vault_aws_auth_mount
+}
+
+# configure the AWS secrets engine and roles for TFC NATIVE DPC
+module "vault_aws_auth" {
+  source = "../standalone-repos/terraform-vault-aws"
+  count  = var.enable_vault_backed_aws_auth ? 1 : 0
+
+  vault_namespace  = var.vault_namespace
+  application_name = var.application_name
+  region           = var.aws_region
+  mount_path       = var.vault_aws_auth_mount
+
+  vault_aws_access_key = var.vault_aws_access_key
+  vault_aws_secret_key = var.vault_aws_secret_key
+
+  # NATIVE DPC expects the AWS Secrets Engine Role name to match the TFC Workspace Vault Role name EXACTLY
+  roles = {
+    for env in var.environments : "${var.application_name}-tfc-${env}" => {
+      iam_role_arn = var.application_iam_role_arn
+    }
+  }
+
+  tfc_workspace_vault_roles = [
+    for env in var.environments : "${var.application_name}-tfc-${env}"
+  ]
+
+  depends_on = [module.vault_namespace]
 }

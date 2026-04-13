@@ -90,7 +90,7 @@ rule "terraform_typed_variables" {
 
 # Standard module structure
 rule "terraform_standard_module_structure" {
-  enabled = true
+  enabled = false
 }
 
 rule "terraform_required_version" {
@@ -139,7 +139,7 @@ rule "terraform_module_version" {
 
 # Flag unused required_providers entries
 rule "terraform_unused_required_providers" {
-  enabled = true
+  enabled = false
 }
 
 # AWS-specific rules

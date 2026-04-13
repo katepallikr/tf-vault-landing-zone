@@ -7,12 +7,12 @@ BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
-export TF_TOKEN_app_terraform_io="qzC9lKWgDyG3uQ.atlasv1.A7td2pyUDbDyw62yzzZcS7Hr8CEyXgzys0YyJ8OjOAZd2YzzyclNUrk4wlyfRaqrCdo"
-export VAULT_TOKEN="hvs.CAESIJY1zV1c6dcm2WzbM4JzJpAVmJm-MOfCci5yG1hxJXMDGikKImh2cy5Yc3NYZVc3d1dHSmQ0eVlhWnZTR0pCNEkueEJNSlAQicbWCg"
+export TF_TOKEN_app_terraform_io="GSbtyclMI6bPRg.atlasv1.T9JT1amV7NwIJgRKyz8neyiJMDebbts4Uqm0M8v4m94hxeNtmkocFHVND8tzdWvjijw"
+export VAULT_TOKEN="hvs.CAESIMb36xxEgqIgTaTxSLXroWhzq2OH3GCIgkBBUkP7VmpSGikKImh2cy50cDkwQVo0aWs2VHFnWDQwcmxlb1lONEUueEJNSlAQkIv6Cg"
 export VAULT_ADDR="https://vault-cluster-public-vault-d73c9b8f.dfa4b06b.z1.hashicorp.cloud:8200"
 export AWS_ACCESS_KEY_ID="AKIAZBNNS3LERBPBY6GE"
 export AWS_SECRET_ACCESS_KEY="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"
-export TFE_TOKEN="qzC9lKWgDyG3uQ.atlasv1.A7td2pyUDbDyw62yzzZcS7Hr8CEyXgzys0YyJ8OjOAZd2YzzyclNUrk4wlyfRaqrCdo"
+export TFE_TOKEN="GSbtyclMI6bPRg.atlasv1.T9JT1amV7NwIJgRKyz8neyiJMDebbts4Uqm0M8v4m94hxeNtmkocFHVND8tzdWvjijw"
 
 echo -e "\n${BLUE}[1/5] Provisioning strictly scoped AWS IAM Role for Vault...${NC}"
 cd aws-setup

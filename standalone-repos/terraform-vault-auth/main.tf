@@ -1,7 +1,5 @@
-# JWT Auth Backend and Roles
-# Configures Vault to trust TFC/TFE workload identity tokens. 
-# Creates a role per environment with bounded claims.
-# JWT Auth Backend
+# vault trusting tfc tokens
+# backend
 
 resource "vault_jwt_auth_backend" "tfc" {
   count = var.create_jwt_backend ? 1 : 0
@@ -19,7 +17,7 @@ resource "vault_jwt_auth_backend" "tfc" {
   }
 }
 
-# Base Policy — Token Self-Management
+# self manage policy
 
 resource "vault_policy" "tfc_base" {
   namespace = var.vault_namespace != "" ? var.vault_namespace : null
@@ -42,7 +40,7 @@ resource "vault_policy" "tfc_base" {
   HCL
 }
 
-# Custom Policies
+# custom policies
 
 resource "vault_policy" "custom" {
   for_each = var.custom_policy_hcl
@@ -52,7 +50,7 @@ resource "vault_policy" "custom" {
   policy    = each.value
 }
 
-# JWT Auth Roles — One Per Environment
+# environment roles
 
 data "vault_auth_backend" "existing" {
   count     = var.create_jwt_backend ? 0 : 1

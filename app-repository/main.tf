@@ -1,48 +1,52 @@
 # Application Implementation
 # Team: payment-api
 
-# --- Mount Application-specific AWS Secrets Engine ---
-module "vault_aws_auth" {
-  source = "./modules/terraform-vault-aws"
 
-  vault_namespace  = "" # HCP Vault Dedicated root
-  application_name = "payment-api"
-  region           = var.aws_region
 
-  # Base credentials for Vault to manage this specific AWS engine
-  vault_aws_access_key = var.vault_aws_access_key
-  vault_aws_secret_key = var.vault_aws_secret_key
-
-  roles = {
-    "app-admin" = {
-      # SECURITY: Ensure this IAM Role has a strict IAM Permission Boundary
-      # attached natively in AWS to prevent STS tokens from escalating privileges.
-      iam_role_arn = var.application_iam_role_arn
-    }
-  }
-
-  tfc_workspace_vault_roles = [
-    "payment-api-tfc-dev",
-    "payment-api-tfc-prod"
-  ]
-}
-
-# --- Acquire STS Credentials ---
-data "vault_aws_access_credentials" "creds" {
-  backend = module.vault_aws_auth.backend_path
-  role    = element(module.vault_aws_auth.roles, 0)
-  type    = "sts"
-
-  # Do not read until the mount exists
-  depends_on = [module.vault_aws_auth]
-}
-
-# --- Provision AWS Infrastructure ---
+# provision aws resources
 resource "aws_s3_bucket" "app_storage" {
   bucket_prefix = "payment-api-data-"
 
   tags = {
     Environment = terraform.workspace
     ManagedBy   = "Vault-OIDC-Injected-Terraform"
+    Application = "payment-api"
   }
+}
+
+resource "aws_s3_bucket_versioning" "app_storage" {
+  bucket = aws_s3_bucket.app_storage.id
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_kms_key" "app_key" {
+  description             = "KMS key for Payment API S3 Bucket"
+  deletion_window_in_days = 10
+  enable_key_rotation     = true
+
+  tags = {
+    Application = "payment-api"
+    Environment = terraform.workspace
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "app_storage" {
+  bucket = aws_s3_bucket.app_storage.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      kms_master_key_id = aws_kms_key.app_key.arn
+      sse_algorithm     = "aws:kms"
+    }
+  }
+}
+
+resource "aws_s3_bucket_public_access_block" "app_storage" {
+  bucket                  = aws_s3_bucket.app_storage.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }

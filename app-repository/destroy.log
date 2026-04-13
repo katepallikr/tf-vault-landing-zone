@@ -5,25 +5,15 @@ will stop streaming the logs, but will not stop the apply running remotely.[0m
 Preparing the remote apply...
 [0m
 [0m[33mTo view this run in a browser, visit:[0m
-[0m[33mhttps://app.terraform.io/app/hashicorp-kranthi/payment-api-dev/runs/run-C9CBbv9RtZUGyHox[0m
+[0m[33mhttps://app.terraform.io/app/hashicorp-kranthi/payment-api-dev/runs/run-XdpquZUNCMjuBvTm[0m
 [0m
 Waiting for the plan to start...
 
 Terraform v1.14.8
 on linux_amd64
-Initializing plugins and modules...
-[0m[1mInitializing HCP Terraform...[0m
-[0m[1mInitializing modules...[0m
-- vault_aws_auth in
-[31m╷[0m[0m
-[31m│[0m [0m[1m[31mError: [0m[0m[1mUnreadable module directory[0m
-[31m│[0m [0m
-[31m│[0m [0m[0mUnable to evaluate directory symlink: lstat ../standalone-repos: no such
-[31m│[0m [0mfile or directory
-[31m╵[0m[0m
-[31m╷[0m[0m
-[31m│[0m [0m[1m[31mError: [0m[0m[1mUnreadable module directory[0m
-[31m│[0m [0m
-[31m│[0m [0m[0mThe directory  could not be read for module "vault_aws_auth" at main.tf:5.
-[31m╵[0m[0m
-Operation failed: failed running terraform init (exit 1)
+Operation failed: failed authenticating to Vault: Error making API request.
+
+URL: PUT https://vault-cluster-public-vault-d73c9b8f.dfa4b06b.z1.hashicorp.cloud:8200/v1/auth/jwt/login
+Code: 400. Errors:
+
+* role "payment-api-tfc-dev" could not be found

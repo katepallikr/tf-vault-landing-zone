@@ -1,5 +1,4 @@
-# Mounts AWS secrets engine and configures STS assumed roles.
-# Secrets Engine Mount
+# secrets engine mount
 
 resource "vault_aws_secret_backend" "aws" {
   namespace   = var.vault_namespace != "" ? var.vault_namespace : null
@@ -15,7 +14,7 @@ resource "vault_aws_secret_backend" "aws" {
   max_lease_ttl_seconds     = 14400
 }
 
-# Dynamic Roles Configuration
+# setup roles
 
 # Map Vault logical role -> AWS IAM Role ARN
 resource "vault_aws_secret_backend_role" "assumed_roles" {
@@ -30,9 +29,7 @@ resource "vault_aws_secret_backend_role" "assumed_roles" {
   max_sts_ttl     = each.value.max_sts_ttl
 }
 
-# Terraform Workspace Policy Integration
-
-# Read policy for TFC workspaces to request these creds.
+# read policy for TFC workspaces
 resource "vault_policy" "tfc_aws_secrets_reader" {
   count = length(var.tfc_workspace_vault_roles) > 0 ? 1 : 0
 
@@ -54,5 +51,5 @@ resource "vault_policy" "tfc_aws_secrets_reader" {
   HCL
 }
 
-# TFC workspace tokens are managed in terraform-vault-auth.
-# Export this policy name so the orchestrator can attach it over there.
+# tfc workspace tokens are in terraform-vault-auth.
+# export this policy name to attach it over there.

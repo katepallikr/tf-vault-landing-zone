@@ -17,7 +17,7 @@ data "tfe_organization" "this" {
 
 module "workspace" {
   # source = "git::https://github.com/org/terraform-tfe-workspace.git?ref=v1.0.0"
-  source = "./standalone-repos/terraform-tfe-workspace"
+  source = "../standalone-repos/terraform-tfe-workspace"
 
   organization_name    = var.organization_name
   project_name         = var.project_name
@@ -51,7 +51,7 @@ module "workspace" {
 
 module "vault_auth" {
   # source = "git::https://github.com/org/terraform-vault-auth.git?ref=v1.0.0"
-  source = "./standalone-repos/terraform-vault-auth"
+  source = "../standalone-repos/terraform-vault-auth"
   count  = var.enable_vault_integration ? 1 : 0
 
   organization_name = var.organization_name
@@ -78,7 +78,7 @@ module "vault_auth" {
 
 module "vault_namespace" {
   # source = "git::https://github.com/org/terraform-vault-namespace.git?ref=v1.0.0"
-  source = "./standalone-repos/terraform-vault-namespace"
+  source = "../standalone-repos/terraform-vault-namespace"
   count  = var.enable_vault_namespace ? 1 : 0
 
   namespace_path    = local.vault_app_namespace_path
@@ -95,7 +95,7 @@ module "vault_namespace" {
 
 module "variable_sets" {
   # source = "git::https://github.com/org/terraform-tfc-variable-sets.git?ref=v1.0.0"
-  source = "./standalone-repos/terraform-tfc-variable-sets"
+  source = "../standalone-repos/terraform-tfc-variable-sets"
   count  = length(var.variable_set_ids) > 0 ? 1 : 0
 
   project_id       = module.workspace.project_id
@@ -104,7 +104,7 @@ module "variable_sets" {
 
 module "notifications" {
   # source = "git::https://github.com/org/terraform-tfc-notifications.git?ref=v1.0.0"
-  source = "./standalone-repos/terraform-tfc-notifications"
+  source = "../standalone-repos/terraform-tfc-notifications"
   count  = var.slack_webhook_url != "" ? 1 : 0
 
   workspace_ids     = module.workspace.workspace_ids
@@ -113,7 +113,7 @@ module "notifications" {
 
 module "cloud_oidc" {
   # source = "git::https://github.com/org/terraform-tfc-cloud-oidc.git?ref=v1.0.0"
-  source = "./standalone-repos/terraform-tfc-cloud-oidc"
+  source = "../standalone-repos/terraform-tfc-cloud-oidc"
   count  = var.enable_cloud_oidc ? 1 : 0
 
   workspace_ids     = module.workspace.workspace_ids
@@ -123,7 +123,7 @@ module "cloud_oidc" {
 
 module "run_tasks" {
   # source = "git::https://github.com/org/terraform-tfc-run-tasks.git?ref=v1.0.0"
-  source   = "./standalone-repos/terraform-tfc-run-tasks"
+  source   = "../standalone-repos/terraform-tfc-run-tasks"
   for_each = toset(var.run_task_ids)
 
   workspace_ids = module.workspace.workspace_ids
@@ -131,4 +131,3 @@ module "run_tasks" {
 }
 
 # TODO: support agent pools for private network workspaces
-
