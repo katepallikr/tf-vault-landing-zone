@@ -7,12 +7,12 @@ YELLOW='\033[1;33m'
 NC='\033[0m' # No Color
 
 # Hardcoded environment tokens for guaranteed demo execution
-export TF_TOKEN_app_terraform_io="qzC9lKWgDyG3uQ.atlasv1.A7td2pyUDbDyw62yzzZcS7Hr8CEyXgzys0YyJ8OjOAZd2YzzyclNUrk4wlyfRaqrCdo"
-export VAULT_TOKEN="hvs.CAESIJY1zV1c6dcm2WzbM4JzJpAVmJm-MOfCci5yG1hxJXMDGikKImh2cy5Yc3NYZVc3d1dHSmQ0eVlhWnZTR0pCNEkueEJNSlAQicbWCg"
+export TF_TOKEN_app_terraform_io=""
+export VAULT_TOKEN=""
 export VAULT_ADDR="https://vault-cluster-public-vault-d73c9b8f.dfa4b06b.z1.hashicorp.cloud:8200"
-export AWS_ACCESS_KEY_ID="AKIAZBNNS3LERBPBY6GE"
-export AWS_SECRET_ACCESS_KEY="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"
-export TFE_TOKEN="qzC9lKWgDyG3uQ.atlasv1.A7td2pyUDbDyw62yzzZcS7Hr8CEyXgzys0YyJ8OjOAZd2YzzyclNUrk4wlyfRaqrCdo"
+export AWS_ACCESS_KEY_ID=""
+export AWS_SECRET_ACCESS_KEY=""
+export TFE_TOKEN=""
 
 clear
 
